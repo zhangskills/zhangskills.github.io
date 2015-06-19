@@ -22,7 +22,7 @@
 
 
 
-  <meta name="keywords" content="clojure,idea," />
+  <meta name="keywords" content="jpa,spring,spring boot," />
 
 
 
@@ -43,7 +43,7 @@
   </script>
 
 
-  <title> 搭建clojure开发环境 // 程序员Jack的自留地 </title>
+  <title> Spring boot jpa单数据源、多数据源配置 // 程序员Jack的自留地 </title>
 </head>
 
 <body>
@@ -123,7 +123,7 @@
           
           
             
-              搭建clojure开发环境
+              Spring boot jpa单数据源、多数据源配置
             
           
         </h1>
@@ -131,7 +131,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          发表于 2015-05-10
+          发表于 2015-06-18
         </span>
 
         
@@ -140,8 +140,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/05/10/搭建clojure开发环境/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/10/搭建clojure开发环境/"></span>
+            <a href="/2015/06/18/Spring-boot-jpa单数据源、多数据源配置/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/06/18/Spring-boot-jpa单数据源、多数据源配置/"></span>
             </a>
           </span>
           
@@ -155,29 +155,30 @@
       
 
       
-        <p><strong>操作系统为</strong>：Mac OS X 10.10.3</p>
-<p><strong>IDE</strong>：IntelliJ IDEA 14.1.1</p>
-<h2 id="leiningen">leiningen</h2><h3 id="Leiningen是你的主要工具，_它用于：">Leiningen是你的主要工具， 它用于：</h3><ol>
-<li>启动一个 REPL</li>
-<li>下载+安装类库</li>
-<li>运行你的程序</li>
-<li>启动一个服务器， 运行你所写的webapps</li>
+        <p>spring boot很多配置都采用自动化，开发起来非常快速，试了一阵子jpa，各种爽歪歪。<br>不过，凡事有利必有弊，自动化封装好，有些个性定制的东西反而不好设置，今天为了配置jpa多数据源，各种郁闷（专业知识不过硬，注定被坑，没办法的事情），最后总算摸出点门路，记录一下（采用mysql）</p>
+<h2 id="单数据源设置：">单数据源设置：</h2><ol>
+<li><p>application.properties中添加：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">spring<span class="class">.datasource</span><span class="class">.name</span>=mysql</span><br><span class="line">spring<span class="class">.datasource</span><span class="class">.url</span>=jdbc:mysql:<span class="comment">//localhost/test?characterEncoding=UTF-8&amp;autoReconnect=true</span></span><br><span class="line">spring<span class="class">.datasource</span><span class="class">.username</span>=root</span><br><span class="line">spring<span class="class">.datasource</span><span class="class">.password</span>=root</span><br><span class="line">spring<span class="class">.datasource</span><span class="class">.driver-class-name</span>=com<span class="class">.mysql</span><span class="class">.jdbc</span><span class="class">.Driver</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>需要在Application类上加注解</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 自己的Repository类包</span></span><br><span class="line"><span class="variable">@EnableJpaRepositories</span>(<span class="string">"com.test.dao"</span>)</span><br><span class="line"><span class="comment">// 自己的Entity类包</span></span><br><span class="line"><span class="variable">@EntityScan</span>(<span class="string">"com.test.model"</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建Entity类、Repository类，ok</p>
+</li>
 </ol>
-<h3 id="安装">安装</h3><blockquote>
-<p>brew install leiningen</p>
-</blockquote>
-<h3 id="打开repl">打开repl</h3><blockquote>
-<p>lein repl</p>
-</blockquote>
-<figure class="highlight delphi"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">lein repl</span><br><span class="line">nREPL server started <span class="keyword">on</span> port <span class="number">50438</span> <span class="keyword">on</span> host <span class="number">127.0</span>.<span class="number">0.1</span> - nrepl:<span class="comment">//127.0.0.1:50438</span></span><br><span class="line">REPL-y <span class="number">0.3</span>.<span class="number">5</span>, nREPL <span class="number">0.2</span>.<span class="number">6</span></span><br><span class="line">Clojure <span class="number">1.6</span>.<span class="number">0</span></span><br><span class="line">Java HotSpot(TM) <span class="number">64</span>-Bit Server VM <span class="number">1.8</span>.<span class="number">0</span>_40-b25</span><br><span class="line">    Docs: (doc <span class="function"><span class="keyword">function</span>-<span class="title">name</span>-<span class="title">here</span>)</span><br><span class="line">          <span class="params">(find-doc "part-<span class="keyword">of</span>-name-here")</span></span><br><span class="line">  <span class="title">Source</span>:</span> (source <span class="function"><span class="keyword">function</span>-<span class="title">name</span>-<span class="title">here</span>)</span><br><span class="line"> <span class="title">Javadoc</span>:</span> (javadoc java-<span class="keyword">object</span>-<span class="keyword">or</span>-<span class="keyword">class</span>-here)</span><br><span class="line">    <span class="keyword">Exit</span>: Control+D <span class="keyword">or</span> (<span class="keyword">exit</span>) <span class="keyword">or</span> (quit)</span><br><span class="line"> Results: <span class="keyword">Stored</span> <span class="keyword">in</span> vars *<span class="number">1</span>, *<span class="number">2</span>, *<span class="number">3</span>, an exception <span class="keyword">in</span> *e</span><br><span class="line"></span><br><span class="line">user=&gt;</span><br></pre></td></tr></table></figure>
-<p>运行时报错：</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Exception <span class="keyword">in</span> thread <span class="string">"Thread-3"</span> java<span class="class">.net</span><span class="class">.ConnectException</span>: Connection refused</span><br><span class="line">	at java<span class="class">.net</span><span class="class">.PlainSocketImpl</span><span class="class">.socketConnect</span>(Native Method)</span><br><span class="line">	at java<span class="class">.net</span><span class="class">.AbstractPlainSocketImpl</span><span class="class">.doConnect</span>(AbstractPlainSocketImpl<span class="class">.java</span>:<span class="number">345</span>)</span><br><span class="line">	at java<span class="class">.net</span><span class="class">.AbstractPlainSocketImpl</span><span class="class">.connectToAddress</span>(AbstractPlainSocketImpl<span class="class">.java</span>:<span class="number">206</span>)</span><br><span class="line">	at java<span class="class">.net</span><span class="class">.AbstractPlainSocketImpl</span><span class="class">.connect</span>(AbstractPlainSocketImpl<span class="class">.java</span>:<span class="number">188</span>)</span><br><span class="line">	at java<span class="class">.net</span><span class="class">.SocksSocketImpl</span><span class="class">.connect</span>(SocksSocketImpl<span class="class">.java</span>:<span class="number">392</span>)</span><br><span class="line">	at java<span class="class">.net</span><span class="class">.Socket</span><span class="class">.connect</span>(Socket<span class="class">.java</span>:<span class="number">589</span>)</span><br><span class="line">	at java<span class="class">.net</span><span class="class">.Socket</span><span class="class">.connect</span>(Socket<span class="class">.java</span>:<span class="number">538</span>)</span><br><span class="line">	at java<span class="class">.net</span><span class="class">.Socket</span>.&lt;init&gt;(Socket<span class="class">.java</span>:<span class="number">434</span>)</span><br><span class="line">	at java<span class="class">.net</span><span class="class">.Socket</span>.&lt;init&gt;(Socket<span class="class">.java</span>:<span class="number">211</span>)</span><br></pre></td></tr></table></figure>
-<p>需要执行：<code>sudo scutil --set HostName MyName.local</code></p>
-<p>详见：<a href="https://github.com/technomancy/leiningen/issues/1321" target="_blank" rel="external">https://github.com/technomancy/leiningen/issues/1321</a></p>
-<h3 id="创建项目">创建项目</h3><p><code>lein new groupId/artifactId</code>会在当前目录下，生成一个名为“artifactId”的项目，其中groupId和artifactId和Maven里的概念一致。</p>
-<h2 id="Idea">Idea</h2><h3 id="添加La_Clojure插件">添加La Clojure插件</h3><p>打开preferences 》Plugins 》 Browse Repositories， 搜索Clojure， 下载La Clojure。</p>
-<h3 id="新建项目">新建项目</h3><p>打开File 》New 》 Project… 》 Intellij Platform Plugin，选中Clojure，一路Next。</p>
-<p>如果直接打开刚才用<code>lein命令</code>创建的项目，需要在打开的项目上右单击，点击Add Framework Support…，左侧选中Clojure，点击ok。</p>
+<h2 id="多数据源设置">多数据源设置</h2><ol>
+<li><p>application.properties中添加：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">spring<span class="class">.datasource</span>.<span class="number">1</span>.name=mysql</span><br><span class="line">spring<span class="class">.datasource</span>.<span class="number">1</span>.url=jdbc:mysql:<span class="comment">//localhost/test?characterEncoding=UTF-8&amp;autoReconnect=true</span></span><br><span class="line">spring<span class="class">.datasource</span>.<span class="number">1</span>.username=root</span><br><span class="line">spring<span class="class">.datasource</span>.<span class="number">1</span>.password=<span class="number">123</span></span><br><span class="line">spring<span class="class">.datasource</span>.<span class="number">1</span>.driver-class-name=com<span class="class">.mysql</span><span class="class">.jdbc</span><span class="class">.Driver</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">spring<span class="class">.datasource</span>.<span class="number">2</span>.name=mysql</span><br><span class="line">spring<span class="class">.datasource</span>.<span class="number">2</span>.url=jdbc:mysql:<span class="comment">//localhost/test2?characterEncoding=UTF-8&amp;autoReconnect=true</span></span><br><span class="line">spring<span class="class">.datasource</span>.<span class="number">2</span>.username=root</span><br><span class="line">spring<span class="class">.datasource</span>.<span class="number">2</span>.password=<span class="number">123</span></span><br><span class="line">spring<span class="class">.datasource</span>.<span class="number">2</span>.driver-class-name=com<span class="class">.mysql</span><span class="class">.jdbc</span><span class="class">.Driver</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>设置主数据源RepositoryPrimaryConfig类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@Configuration</span></span><br><span class="line"><span class="annotation">@EnableTransactionManagement</span></span><br><span class="line"><span class="comment">// com.test.dao包下的Repository类采用默认（"entityManagerFactory"）</span></span><br><span class="line"><span class="annotation">@EnableJpaRepositories</span>(basePackages = <span class="string">"com.test.dao"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RepositoryPrimaryConfig</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="annotation">@Bean</span></span><br><span class="line">  <span class="comment">// 用于指定默认DataSource</span></span><br><span class="line">  <span class="annotation">@Primary</span></span><br><span class="line">  <span class="comment">// 指定配置前缀，与application.properties中对应</span></span><br><span class="line">  <span class="annotation">@ConfigurationProperties</span>(prefix = <span class="string">"spring.datasource.1"</span>)</span><br><span class="line">  <span class="function"><span class="keyword">public</span> DataSource <span class="title">primaryDataSource</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> DataSourceBuilder.create().build();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="annotation">@Bean</span></span><br><span class="line">  <span class="comment">// 用于指定默认EntityManagerFactory</span></span><br><span class="line">  <span class="annotation">@Primary</span></span><br><span class="line">  <span class="comment">// @EnableJpaRepositories未指定entityManagerFactoryRef属性时，默认为"transactionManager"</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> LocalContainerEntityManagerFactoryBean <span class="title">entityManagerFactory</span><span class="params">(EntityManagerFactoryBuilder builder, JpaProperties jpaProperties)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> builder</span><br><span class="line">        .dataSource(primaryDataSource())</span><br><span class="line">        <span class="comment">// 设置entity类属性与mysql表字段对应方式</span></span><br><span class="line">        .properties(jpaProperties.getHibernateProperties(primaryDataSource()))</span><br><span class="line">        <span class="comment">// 指定Entity类包位置</span></span><br><span class="line">        .packages(<span class="string">"com.test.model"</span>)</span><br><span class="line">        .persistenceUnit(<span class="string">"primary"</span>)</span><br><span class="line">        .build();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>设置第二数据源RepositorySecondaryConfig类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@Configuration</span></span><br><span class="line"><span class="annotation">@EnableTransactionManagement</span></span><br><span class="line"><span class="annotation">@EnableJpaRepositories</span>(entityManagerFactoryRef = <span class="string">"emf2"</span>,</span><br><span class="line">    transactionManagerRef = <span class="string">"ptm2"</span>,</span><br><span class="line">    basePackages = <span class="string">"com.test.dao2"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RepositorySecondaryConfig</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="annotation">@Bean</span></span><br><span class="line">  <span class="annotation">@ConfigurationProperties</span>(prefix = <span class="string">"spring.datasource.2"</span>)</span><br><span class="line">  <span class="function"><span class="keyword">public</span> DataSource <span class="title">secondaryDataSource</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> DataSourceBuilder.create().build();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="annotation">@Autowired</span></span><br><span class="line">  <span class="keyword">private</span> JpaProperties jpaProperties;</span><br><span class="line"></span><br><span class="line">  <span class="annotation">@Bean</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> LocalContainerEntityManagerFactoryBean <span class="title">emf2</span><span class="params">(EntityManagerFactoryBuilder builder)</span> </span>&#123;</span><br><span class="line">    DataSource dataSource = secondaryDataSource();</span><br><span class="line">    <span class="keyword">return</span> builder</span><br><span class="line">        .dataSource(dataSource)</span><br><span class="line">        .properties(jpaProperties.getHibernateProperties(dataSource))</span><br><span class="line">        .packages(<span class="string">"com.test.model"</span>)</span><br><span class="line">        .persistenceUnit(<span class="string">"second"</span>)</span><br><span class="line">        .build();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="annotation">@Bean</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> PlatformTransactionManager <span class="title">ptm2</span><span class="params">(EntityManagerFactoryBuilder builder)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> JpaTransactionManager(emf2(builder).getObject());</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建Entity类、Repository类，ok</p>
+</li>
+</ol>
 
       
     </div>
@@ -186,9 +187,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/clojure/"> #clojure </a>
+            <a href="/tags/jpa/"> #jpa </a>
           
-            <a href="/tags/idea/"> #idea </a>
+            <a href="/tags/spring/"> #spring </a>
+          
+            <a href="/tags/spring-boot/"> #spring boot </a>
           
         </div>
       
@@ -197,13 +200,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/06/18/Spring-boot-jpa单数据源、多数据源配置/">Spring boot jpa单数据源、多数据源配置</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/05/09/使用hexo搭建静态博客/">使用hexo搭建静态博客</a>
+              <a href="/2015/05/10/搭建clojure开发环境/">搭建clojure开发环境</a>
             
           </div>
         </div>
@@ -219,8 +220,8 @@
     
       <div class="comments" id="comments">
         
-          <div class="ds-thread" data-thread-key="2015/05/10/搭建clojure开发环境/"
-               data-title="搭建clojure开发环境" data-url="http://blog.withword.com/2015/05/10/搭建clojure开发环境/">
+          <div class="ds-thread" data-thread-key="2015/06/18/Spring-boot-jpa单数据源、多数据源配置/"
+               data-title="Spring boot jpa单数据源、多数据源配置" data-url="http://blog.withword.com/2015/06/18/Spring-boot-jpa单数据源、多数据源配置/">
           </div>
         
       </div>
@@ -315,7 +316,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#leiningen"><span class="nav-number">1.</span> <span class="nav-text">leiningen</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Leiningen是你的主要工具，_它用于："><span class="nav-number">1.1.</span> <span class="nav-text">Leiningen是你的主要工具， 它用于：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装"><span class="nav-number">1.2.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#打开repl"><span class="nav-number">1.3.</span> <span class="nav-text">打开repl</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建项目"><span class="nav-number">1.4.</span> <span class="nav-text">创建项目</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Idea"><span class="nav-number">2.</span> <span class="nav-text">Idea</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#添加La_Clojure插件"><span class="nav-number">2.1.</span> <span class="nav-text">添加La Clojure插件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#新建项目"><span class="nav-number">2.2.</span> <span class="nav-text">新建项目</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#单数据源设置："><span class="nav-number">1.</span> <span class="nav-text">单数据源设置：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多数据源设置"><span class="nav-number">2.</span> <span class="nav-text">多数据源设置</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>

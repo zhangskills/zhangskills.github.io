@@ -125,6 +125,105 @@
           
           
             
+              <a class="post-title-link" href="/2015/06/18/Spring-boot-jpa单数据源、多数据源配置/">
+                Spring boot jpa单数据源、多数据源配置
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于 2015-06-18
+        </span>
+
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/06/18/Spring-boot-jpa单数据源、多数据源配置/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/06/18/Spring-boot-jpa单数据源、多数据源配置/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>spring boot很多配置都采用自动化，开发起来非常快速，试了一阵子jpa，各种爽歪歪。<br>不过，凡事有利必有弊，自动化封装好，有些个性定制的东西反而不好设置，今天为了配置jpa多数据源，各种郁闷（专业知识不过硬，注定被坑，没办法的事情），最后总算摸出点门路，记录一下（采用mysql）</p>
+<h2 id="单数据源设置：">单数据源设置：</h2><ol>
+<li><p>application.properties中添加：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">spring<span class="class">.datasource</span><span class="class">.name</span>=mysql</span><br><span class="line">spring<span class="class">.datasource</span><span class="class">.url</span>=jdbc:mysql:<span class="comment">//localhost/test?characterEncoding=UTF-8&amp;autoReconnect=true</span></span><br><span class="line">spring<span class="class">.datasource</span><span class="class">.username</span>=root</span><br><span class="line">spring<span class="class">.datasource</span><span class="class">.password</span>=root</span><br><span class="line">spring<span class="class">.datasource</span><span class="class">.driver-class-name</span>=com<span class="class">.mysql</span><span class="class">.jdbc</span><span class="class">.Driver</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>需要在Application类上加注解</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 自己的Repository类包</span></span><br><span class="line"><span class="variable">@EnableJpaRepositories</span>(<span class="string">"com.test.dao"</span>)</span><br><span class="line"><span class="comment">// 自己的Entity类包</span></span><br><span class="line"><span class="variable">@EntityScan</span>(<span class="string">"com.test.model"</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建Entity类、Repository类，ok</p>
+</li>
+</ol>
+<h2 id="多数据源设置">多数据源设置</h2><ol>
+<li><p>application.properties中添加：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">spring<span class="class">.datasource</span>.<span class="number">1</span>.name=mysql</span><br><span class="line">spring<span class="class">.datasource</span>.<span class="number">1</span>.url=jdbc:mysql:<span class="comment">//localhost/test?characterEncoding=UTF-8&amp;autoReconnect=true</span></span><br><span class="line">spring<span class="class">.datasource</span>.<span class="number">1</span>.username=root</span><br><span class="line">spring<span class="class">.datasource</span>.<span class="number">1</span>.password=<span class="number">123</span></span><br><span class="line">spring<span class="class">.datasource</span>.<span class="number">1</span>.driver-class-name=com<span class="class">.mysql</span><span class="class">.jdbc</span><span class="class">.Driver</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">spring<span class="class">.datasource</span>.<span class="number">2</span>.name=mysql</span><br><span class="line">spring<span class="class">.datasource</span>.<span class="number">2</span>.url=jdbc:mysql:<span class="comment">//localhost/test2?characterEncoding=UTF-8&amp;autoReconnect=true</span></span><br><span class="line">spring<span class="class">.datasource</span>.<span class="number">2</span>.username=root</span><br><span class="line">spring<span class="class">.datasource</span>.<span class="number">2</span>.password=<span class="number">123</span></span><br><span class="line">spring<span class="class">.datasource</span>.<span class="number">2</span>.driver-class-name=com<span class="class">.mysql</span><span class="class">.jdbc</span><span class="class">.Driver</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>设置主数据源RepositoryPrimaryConfig类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@Configuration</span></span><br><span class="line"><span class="annotation">@EnableTransactionManagement</span></span><br><span class="line"><span class="comment">// com.test.dao包下的Repository类采用默认（"entityManagerFactory"）</span></span><br><span class="line"><span class="annotation">@EnableJpaRepositories</span>(basePackages = <span class="string">"com.test.dao"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RepositoryPrimaryConfig</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="annotation">@Bean</span></span><br><span class="line">  <span class="comment">// 用于指定默认DataSource</span></span><br><span class="line">  <span class="annotation">@Primary</span></span><br><span class="line">  <span class="comment">// 指定配置前缀，与application.properties中对应</span></span><br><span class="line">  <span class="annotation">@ConfigurationProperties</span>(prefix = <span class="string">"spring.datasource.1"</span>)</span><br><span class="line">  <span class="function"><span class="keyword">public</span> DataSource <span class="title">primaryDataSource</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> DataSourceBuilder.create().build();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="annotation">@Bean</span></span><br><span class="line">  <span class="comment">// 用于指定默认EntityManagerFactory</span></span><br><span class="line">  <span class="annotation">@Primary</span></span><br><span class="line">  <span class="comment">// @EnableJpaRepositories未指定entityManagerFactoryRef属性时，默认为"transactionManager"</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> LocalContainerEntityManagerFactoryBean <span class="title">entityManagerFactory</span><span class="params">(EntityManagerFactoryBuilder builder, JpaProperties jpaProperties)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> builder</span><br><span class="line">        .dataSource(primaryDataSource())</span><br><span class="line">        <span class="comment">// 设置entity类属性与mysql表字段对应方式</span></span><br><span class="line">        .properties(jpaProperties.getHibernateProperties(primaryDataSource()))</span><br><span class="line">        <span class="comment">// 指定Entity类包位置</span></span><br><span class="line">        .packages(<span class="string">"com.test.model"</span>)</span><br><span class="line">        .persistenceUnit(<span class="string">"primary"</span>)</span><br><span class="line">        .build();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>设置第二数据源RepositorySecondaryConfig类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@Configuration</span></span><br><span class="line"><span class="annotation">@EnableTransactionManagement</span></span><br><span class="line"><span class="annotation">@EnableJpaRepositories</span>(entityManagerFactoryRef = <span class="string">"emf2"</span>,</span><br><span class="line">    transactionManagerRef = <span class="string">"ptm2"</span>,</span><br><span class="line">    basePackages = <span class="string">"com.test.dao2"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RepositorySecondaryConfig</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="annotation">@Bean</span></span><br><span class="line">  <span class="annotation">@ConfigurationProperties</span>(prefix = <span class="string">"spring.datasource.2"</span>)</span><br><span class="line">  <span class="function"><span class="keyword">public</span> DataSource <span class="title">secondaryDataSource</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> DataSourceBuilder.create().build();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="annotation">@Autowired</span></span><br><span class="line">  <span class="keyword">private</span> JpaProperties jpaProperties;</span><br><span class="line"></span><br><span class="line">  <span class="annotation">@Bean</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> LocalContainerEntityManagerFactoryBean <span class="title">emf2</span><span class="params">(EntityManagerFactoryBuilder builder)</span> </span>&#123;</span><br><span class="line">    DataSource dataSource = secondaryDataSource();</span><br><span class="line">    <span class="keyword">return</span> builder</span><br><span class="line">        .dataSource(dataSource)</span><br><span class="line">        .properties(jpaProperties.getHibernateProperties(dataSource))</span><br><span class="line">        .packages(<span class="string">"com.test.model"</span>)</span><br><span class="line">        .persistenceUnit(<span class="string">"second"</span>)</span><br><span class="line">        .build();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="annotation">@Bean</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> PlatformTransactionManager <span class="title">ptm2</span><span class="params">(EntityManagerFactoryBuilder builder)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> JpaTransactionManager(emf2(builder).getObject());</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建Entity类、Repository类，ok</p>
+</li>
+</ol>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/jpa/"> #jpa </a>
+          
+            <a href="/tags/spring/"> #spring </a>
+          
+            <a href="/tags/spring-boot/"> #spring boot </a>
+          
+        </div>
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2015/05/10/搭建clojure开发环境/">
                 搭建clojure开发环境
               </a>
@@ -531,7 +630,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">4</span>
+              <span class="site-state-item-count">5</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -545,7 +644,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-count">10</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
