@@ -160,6 +160,76 @@
           
           
             
+              <a class="post-title-link" href="/2015/06/19/solr更新单个字段/">
+                solr更新单个字段
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于 2015-06-19
+        </span>
+
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/06/19/solr更新单个字段/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/06/19/solr更新单个字段/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>一直以来更新solr文档的时候都是把文档查出来，修改字段，整个文档更新，最近发现其实solr支持单个字段的更新操作的，不过从4.0以后开始支持，官方的叫法是Atomic Updates，支持set、add、inc。</p>
+<p>官方文档：<a href="https://wiki.apache.org/solr/Atomic_Updates" target="_blank" rel="external">https://wiki.apache.org/solr/Atomic_Updates</a></p>
+<p>示例：</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">curl <span class="symbol">http:</span>/<span class="regexp">/localhost:8983/solr</span><span class="regexp">/update -H 'Content-type:application/json</span><span class="string">' -d '</span></span><br><span class="line">[</span><br><span class="line"> &#123;</span><br><span class="line">  <span class="string">"id"</span>        <span class="symbol">:</span> <span class="string">"TestDoc1"</span>,</span><br><span class="line">  <span class="string">"title"</span>     <span class="symbol">:</span> &#123;<span class="string">"set"</span><span class="symbol">:<span class="string">"test1"</span></span>&#125;,</span><br><span class="line">  <span class="string">"revision"</span>  <span class="symbol">:</span> &#123;<span class="string">"inc"</span><span class="symbol">:</span><span class="number">3</span>&#125;,</span><br><span class="line">  <span class="string">"publisher"</span> <span class="symbol">:</span> &#123;<span class="string">"add"</span><span class="symbol">:<span class="string">"TestPublisher"</span></span>&#125;</span><br><span class="line"> &#125;,</span><br><span class="line"> &#123;</span><br><span class="line">  <span class="string">"id"</span>        <span class="symbol">:</span> <span class="string">"TestDoc2"</span>,</span><br><span class="line">  <span class="string">"publisher"</span> <span class="symbol">:</span> &#123;<span class="string">"add"</span><span class="symbol">:<span class="string">"TestPublisher"</span></span>&#125;</span><br><span class="line"> &#125;</span><br><span class="line">]<span class="string">'</span></span><br></pre></td></tr></table></figure>
+<p>java代码：</p>
+<figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">SolrInputDocument solrInputDocument = <span class="keyword">new</span> SolrInputDocument();</span><br><span class="line">solrInputDocument.addField(<span class="string">"id"</span>, id);</span><br><span class="line"></span><br><span class="line">Map&lt;<span class="keyword">String</span>, <span class="keyword">String</span> &gt; operation = <span class="keyword">new</span> <span class="keyword">HashMap</span>&lt;&gt;();</span><br><span class="line">operation.put(<span class="string">"set"</span>, <span class="string">"test1"</span>);</span><br><span class="line">solrInputDocument.addField(<span class="string">"title"</span>, operation);</span><br><span class="line"></span><br><span class="line">solrServer.<span class="built_in">add</span>(solrInputDocument);</span><br><span class="line">solrServer.commit();</span><br></pre></td></tr></table></figure>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2015/06/18/Spring-boot-jpa单数据源、多数据源配置/">
                 Spring boot jpa单数据源、多数据源配置
               </a>
@@ -631,7 +701,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">5</span>
+              <span class="site-state-item-count">6</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -645,7 +715,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">10</span>
+              <span class="site-state-item-count">11</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
