@@ -195,20 +195,12 @@
 
       
         
-          <ol>
-<li><p>application.properties中添加：</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">spring<span class="class">.data</span><span class="class">.mongodb</span>.<span class="number">0</span>.host=host1</span><br><span class="line">spring<span class="class">.data</span><span class="class">.mongodb</span>.<span class="number">0</span>.port=<span class="number">27017</span></span><br><span class="line">spring<span class="class">.data</span><span class="class">.mongodb</span>.<span class="number">0</span>.database=database1</span><br><span class="line"></span><br><span class="line">spring<span class="class">.data</span><span class="class">.mongodb</span>.<span class="number">1</span>.host=host2</span><br><span class="line">spring<span class="class">.data</span><span class="class">.mongodb</span>.<span class="number">1</span>.port=<span class="number">27017</span></span><br><span class="line">spring<span class="class">.data</span><span class="class">.mongodb</span>.<span class="number">1</span>.database=database2</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>设置主数据源MongoRepositoryFirstConfig类</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@Configuration</span></span><br><span class="line"><span class="annotation">@EnableMongoRepositories</span>(basePackages = <span class="string">"com.acfun.repository"</span>, mongoTemplateRef = <span class="string">"firstMongoTemplate"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MongoRepositoryFirstConfig</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="annotation">@Primary</span></span><br><span class="line">  <span class="annotation">@Bean</span></span><br><span class="line">  <span class="annotation">@ConfigurationProperties</span>(prefix = <span class="string">"spring.data.mongodb.0"</span>)</span><br><span class="line">  <span class="function"><span class="keyword">public</span> MongoProperties <span class="title">firstMongoProperties</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> MongoProperties();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="annotation">@Primary</span></span><br><span class="line">  <span class="annotation">@Bean</span>(name = <span class="string">"firstMongoTemplate"</span>)</span><br><span class="line">  <span class="function"><span class="keyword">public</span> MongoTemplate <span class="title">firstMongoTemplate</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    MongoProperties mongoProperties = firstMongoProperties();</span><br><span class="line">    MongoClient mongoClient = mongoProperties.createMongoClient(<span class="keyword">null</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> MongoTemplate(mongoClient, mongoProperties.getDatabase());</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>设置第二数据源MongoRepositorySecondConfig类</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@Configuration</span></span><br><span class="line"><span class="annotation">@EnableMongoRepositories</span>(basePackages = <span class="string">"com.acfun.repository_old"</span>, mongoTemplateRef = <span class="string">"secondMongoTemplate"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MongoRepositorySecondConfig</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="annotation">@Bean</span></span><br><span class="line">  <span class="annotation">@ConfigurationProperties</span>(prefix = <span class="string">"spring.data.mongodb.1"</span>)</span><br><span class="line">  <span class="function"><span class="keyword">public</span> MongoProperties <span class="title">secondMongoProperties</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> MongoProperties();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="annotation">@Bean</span>(name = <span class="string">"secondMongoTemplate"</span>)</span><br><span class="line">  <span class="function"><span class="keyword">public</span> MongoTemplate <span class="title">secondMongoTemplate</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    MongoProperties mongoProperties = secondMongoProperties();</span><br><span class="line">    MongoClient mongoClient = mongoProperties.createMongoClient(<span class="keyword">null</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> MongoTemplate(mongoClient, mongoProperties.getDatabase());</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>创建Entity类、Repository类，ok</p>
-</li>
-</ol>
-
+          <p>够折腾的，网上找了半天也没找到配置方式，参考jpa的配置，采用分别指定MongoTemplate的方式解决。
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/07/02/Spring-boot-mongodb多数据源配置/">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -274,11 +266,16 @@
       
         
           <p>一直以来更新solr文档的时候都是把文档查出来，修改字段，整个文档更新，最近发现其实solr支持单个字段的更新操作的，不过从4.0以后开始支持，官方的叫法是Atomic Updates，支持set、add、inc。</p>
-<p>官方文档：<a href="https://wiki.apache.org/solr/Atomic_Updates" target="_blank" rel="external">https://wiki.apache.org/solr/Atomic_Updates</a></p>
+<p>官方文档：<a href="https://wiki.apache.org/solr/Atomic_Updates">https://wiki.apache.org/solr/Atomic_Updates</a></p>
+<blockquote>
 <p>示例：</p>
+</blockquote>
 <figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">curl <span class="symbol">http:</span>/<span class="regexp">/localhost:8983/solr</span><span class="regexp">/update -H 'Content-type:application/json</span><span class="string">' -d '</span></span><br><span class="line">[</span><br><span class="line"> &#123;</span><br><span class="line">  <span class="string">"id"</span>        <span class="symbol">:</span> <span class="string">"TestDoc1"</span>,</span><br><span class="line">  <span class="string">"title"</span>     <span class="symbol">:</span> &#123;<span class="string">"set"</span><span class="symbol">:<span class="string">"test1"</span></span>&#125;,</span><br><span class="line">  <span class="string">"revision"</span>  <span class="symbol">:</span> &#123;<span class="string">"inc"</span><span class="symbol">:</span><span class="number">3</span>&#125;,</span><br><span class="line">  <span class="string">"publisher"</span> <span class="symbol">:</span> &#123;<span class="string">"add"</span><span class="symbol">:<span class="string">"TestPublisher"</span></span>&#125;</span><br><span class="line"> &#125;,</span><br><span class="line"> &#123;</span><br><span class="line">  <span class="string">"id"</span>        <span class="symbol">:</span> <span class="string">"TestDoc2"</span>,</span><br><span class="line">  <span class="string">"publisher"</span> <span class="symbol">:</span> &#123;<span class="string">"add"</span><span class="symbol">:<span class="string">"TestPublisher"</span></span>&#125;</span><br><span class="line"> &#125;</span><br><span class="line">]<span class="string">'</span></span><br></pre></td></tr></table></figure>
-<p>java代码：</p>
-<figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">SolrInputDocument solrInputDocument = <span class="keyword">new</span> SolrInputDocument();</span><br><span class="line">solrInputDocument.addField(<span class="string">"id"</span>, id);</span><br><span class="line"></span><br><span class="line">Map&lt;<span class="keyword">String</span>, <span class="keyword">String</span> &gt; operation = <span class="keyword">new</span> <span class="keyword">HashMap</span>&lt;&gt;();</span><br><span class="line">operation.put(<span class="string">"set"</span>, <span class="string">"test1"</span>);</span><br><span class="line">solrInputDocument.addField(<span class="string">"title"</span>, operation);</span><br><span class="line"></span><br><span class="line">solrServer.<span class="built_in">add</span>(solrInputDocument);</span><br><span class="line">solrServer.commit();</span><br></pre></td></tr></table></figure>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/06/19/solr更新单个字段/">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -343,37 +340,12 @@
 
       
         
-          <p>spring boot很多配置都采用自动化，开发起来非常快速，试了一阵子jpa，各种爽歪歪。<br>不过，凡事有利必有弊，自动化封装好，有些个性定制的东西反而不好设置，今天为了配置jpa多数据源，各种郁闷（专业知识不过硬，注定被坑，没办法的事情），最后总算摸出点门路，记录一下（采用mysql）</p>
-<h2 id="单数据源设置：">单数据源设置：</h2><ol>
-<li><p>application.properties中添加：</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">spring<span class="class">.datasource</span><span class="class">.name</span>=mysql</span><br><span class="line">spring<span class="class">.datasource</span><span class="class">.url</span>=jdbc:mysql:<span class="comment">//localhost/test?characterEncoding=UTF-8&amp;autoReconnect=true</span></span><br><span class="line">spring<span class="class">.datasource</span><span class="class">.username</span>=root</span><br><span class="line">spring<span class="class">.datasource</span><span class="class">.password</span>=root</span><br><span class="line">spring<span class="class">.datasource</span><span class="class">.driver-class-name</span>=com<span class="class">.mysql</span><span class="class">.jdbc</span><span class="class">.Driver</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>需要在Application类上加注解</p>
-<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 自己的Repository类包</span></span><br><span class="line"><span class="variable">@EnableJpaRepositories</span>(<span class="string">"com.test.dao"</span>)</span><br><span class="line"><span class="comment">// 自己的Entity类包</span></span><br><span class="line"><span class="variable">@EntityScan</span>(<span class="string">"com.test.model"</span>)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>创建Entity类、Repository类，ok</p>
-</li>
-</ol>
-<h2 id="多数据源设置">多数据源设置</h2><ol>
-<li><p>application.properties中添加：</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">spring<span class="class">.datasource</span>.<span class="number">1</span>.name=mysql</span><br><span class="line">spring<span class="class">.datasource</span>.<span class="number">1</span>.url=jdbc:mysql:<span class="comment">//localhost/test?characterEncoding=UTF-8&amp;autoReconnect=true</span></span><br><span class="line">spring<span class="class">.datasource</span>.<span class="number">1</span>.username=root</span><br><span class="line">spring<span class="class">.datasource</span>.<span class="number">1</span>.password=<span class="number">123</span></span><br><span class="line">spring<span class="class">.datasource</span>.<span class="number">1</span>.driver-class-name=com<span class="class">.mysql</span><span class="class">.jdbc</span><span class="class">.Driver</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">spring<span class="class">.datasource</span>.<span class="number">2</span>.name=mysql</span><br><span class="line">spring<span class="class">.datasource</span>.<span class="number">2</span>.url=jdbc:mysql:<span class="comment">//localhost/test2?characterEncoding=UTF-8&amp;autoReconnect=true</span></span><br><span class="line">spring<span class="class">.datasource</span>.<span class="number">2</span>.username=root</span><br><span class="line">spring<span class="class">.datasource</span>.<span class="number">2</span>.password=<span class="number">123</span></span><br><span class="line">spring<span class="class">.datasource</span>.<span class="number">2</span>.driver-class-name=com<span class="class">.mysql</span><span class="class">.jdbc</span><span class="class">.Driver</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>设置主数据源RepositoryPrimaryConfig类</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@Configuration</span></span><br><span class="line"><span class="annotation">@EnableTransactionManagement</span></span><br><span class="line"><span class="comment">// com.test.dao包下的Repository类采用默认（"entityManagerFactory"）</span></span><br><span class="line"><span class="annotation">@EnableJpaRepositories</span>(basePackages = <span class="string">"com.test.dao"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RepositoryPrimaryConfig</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="annotation">@Bean</span></span><br><span class="line">  <span class="comment">// 用于指定默认DataSource</span></span><br><span class="line">  <span class="annotation">@Primary</span></span><br><span class="line">  <span class="comment">// 指定配置前缀，与application.properties中对应</span></span><br><span class="line">  <span class="annotation">@ConfigurationProperties</span>(prefix = <span class="string">"spring.datasource.1"</span>)</span><br><span class="line">  <span class="function"><span class="keyword">public</span> DataSource <span class="title">primaryDataSource</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> DataSourceBuilder.create().build();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="annotation">@Bean</span></span><br><span class="line">  <span class="comment">// 用于指定默认EntityManagerFactory</span></span><br><span class="line">  <span class="annotation">@Primary</span></span><br><span class="line">  <span class="comment">// @EnableJpaRepositories未指定entityManagerFactoryRef属性时，默认为"transactionManager"</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> LocalContainerEntityManagerFactoryBean <span class="title">entityManagerFactory</span><span class="params">(EntityManagerFactoryBuilder builder, JpaProperties jpaProperties)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> builder</span><br><span class="line">        .dataSource(primaryDataSource())</span><br><span class="line">        <span class="comment">// 设置entity类属性与mysql表字段对应方式</span></span><br><span class="line">        .properties(jpaProperties.getHibernateProperties(primaryDataSource()))</span><br><span class="line">        <span class="comment">// 指定Entity类包位置</span></span><br><span class="line">        .packages(<span class="string">"com.test.model"</span>)</span><br><span class="line">        .persistenceUnit(<span class="string">"primary"</span>)</span><br><span class="line">        .build();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>设置第二数据源RepositorySecondaryConfig类</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@Configuration</span></span><br><span class="line"><span class="annotation">@EnableTransactionManagement</span></span><br><span class="line"><span class="annotation">@EnableJpaRepositories</span>(entityManagerFactoryRef = <span class="string">"emf2"</span>,</span><br><span class="line">    transactionManagerRef = <span class="string">"ptm2"</span>,</span><br><span class="line">    basePackages = <span class="string">"com.test.dao2"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RepositorySecondaryConfig</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="annotation">@Bean</span></span><br><span class="line">  <span class="annotation">@ConfigurationProperties</span>(prefix = <span class="string">"spring.datasource.2"</span>)</span><br><span class="line">  <span class="function"><span class="keyword">public</span> DataSource <span class="title">secondaryDataSource</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> DataSourceBuilder.create().build();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="annotation">@Autowired</span></span><br><span class="line">  <span class="keyword">private</span> JpaProperties jpaProperties;</span><br><span class="line"></span><br><span class="line">  <span class="annotation">@Bean</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> LocalContainerEntityManagerFactoryBean <span class="title">emf2</span><span class="params">(EntityManagerFactoryBuilder builder)</span> </span>&#123;</span><br><span class="line">    DataSource dataSource = secondaryDataSource();</span><br><span class="line">    <span class="keyword">return</span> builder</span><br><span class="line">        .dataSource(dataSource)</span><br><span class="line">        .properties(jpaProperties.getHibernateProperties(dataSource))</span><br><span class="line">        .packages(<span class="string">"com.test.model"</span>)</span><br><span class="line">        .persistenceUnit(<span class="string">"second"</span>)</span><br><span class="line">        .build();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="annotation">@Bean</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> PlatformTransactionManager <span class="title">ptm2</span><span class="params">(EntityManagerFactoryBuilder builder)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> JpaTransactionManager(emf2(builder).getObject());</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>创建Entity类、Repository类，ok</p>
-</li>
-</ol>
-<p>参考：</p>
-<ol>
-<li>《Spring Boot,Spring Data JPA多数据源支持》 <a href="http://wiselyman.iteye.com/blog/2184750" target="_blank" rel="external">http://wiselyman.iteye.com/blog/2184750</a></li>
-<li>《Spring Boot Multiple Datasource》 <a href="http://stackoverflow.com/questions/27614301/spring-boot-multiple-datasource" target="_blank" rel="external">http://stackoverflow.com/questions/27614301/spring-boot-multiple-datasource</a></li>
-<li>《Spring Boot Multiple Datasource - work only one》 <a href="http://stackoverflow.com/questions/29485095/spring-boot-multiple-datasource-work-only-one?lq=1" target="_blank" rel="external">http://stackoverflow.com/questions/29485095/spring-boot-multiple-datasource-work-only-one?lq=1</a></li>
-</ol>
-
+          <p>spring boot很多配置都采用自动化，开发起来非常快速，试了一阵子jpa，各种爽歪歪。<br>不过，凡事有利必有弊，自动化封装好，有些个性定制的东西反而不好设置，今天为了配置jpa多数据源，各种郁闷（专业知识不过硬，注定被坑，没办法的事情），最后总算摸出点门路，记录一下（采用mysql）<br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/06/18/Spring-boot-jpa单数据源、多数据源配置/">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -446,22 +418,11 @@
 <li>运行你的程序</li>
 <li>启动一个服务器， 运行你所写的webapps</li>
 </ol>
-<h3 id="安装">安装</h3><blockquote>
-<p>brew install leiningen</p>
-</blockquote>
-<h3 id="打开repl">打开repl</h3><blockquote>
-<p>lein repl</p>
-</blockquote>
-<figure class="highlight delphi"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">lein repl</span><br><span class="line">nREPL server started <span class="keyword">on</span> port <span class="number">50438</span> <span class="keyword">on</span> host <span class="number">127.0</span>.<span class="number">0.1</span> - nrepl:<span class="comment">//127.0.0.1:50438</span></span><br><span class="line">REPL-y <span class="number">0.3</span>.<span class="number">5</span>, nREPL <span class="number">0.2</span>.<span class="number">6</span></span><br><span class="line">Clojure <span class="number">1.6</span>.<span class="number">0</span></span><br><span class="line">Java HotSpot(TM) <span class="number">64</span>-Bit Server VM <span class="number">1.8</span>.<span class="number">0</span>_40-b25</span><br><span class="line">    Docs: (doc <span class="function"><span class="keyword">function</span>-<span class="title">name</span>-<span class="title">here</span>)</span><br><span class="line">          <span class="params">(find-doc "part-<span class="keyword">of</span>-name-here")</span></span><br><span class="line">  <span class="title">Source</span>:</span> (source <span class="function"><span class="keyword">function</span>-<span class="title">name</span>-<span class="title">here</span>)</span><br><span class="line"> <span class="title">Javadoc</span>:</span> (javadoc java-<span class="keyword">object</span>-<span class="keyword">or</span>-<span class="keyword">class</span>-here)</span><br><span class="line">    <span class="keyword">Exit</span>: Control+D <span class="keyword">or</span> (<span class="keyword">exit</span>) <span class="keyword">or</span> (quit)</span><br><span class="line"> Results: <span class="keyword">Stored</span> <span class="keyword">in</span> vars *<span class="number">1</span>, *<span class="number">2</span>, *<span class="number">3</span>, an exception <span class="keyword">in</span> *e</span><br><span class="line"></span><br><span class="line">user=&gt;</span><br></pre></td></tr></table></figure>
-<p>运行时报错：</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Exception <span class="keyword">in</span> thread <span class="string">"Thread-3"</span> java<span class="class">.net</span><span class="class">.ConnectException</span>: Connection refused</span><br><span class="line">	at java<span class="class">.net</span><span class="class">.PlainSocketImpl</span><span class="class">.socketConnect</span>(Native Method)</span><br><span class="line">	at java<span class="class">.net</span><span class="class">.AbstractPlainSocketImpl</span><span class="class">.doConnect</span>(AbstractPlainSocketImpl<span class="class">.java</span>:<span class="number">345</span>)</span><br><span class="line">	at java<span class="class">.net</span><span class="class">.AbstractPlainSocketImpl</span><span class="class">.connectToAddress</span>(AbstractPlainSocketImpl<span class="class">.java</span>:<span class="number">206</span>)</span><br><span class="line">	at java<span class="class">.net</span><span class="class">.AbstractPlainSocketImpl</span><span class="class">.connect</span>(AbstractPlainSocketImpl<span class="class">.java</span>:<span class="number">188</span>)</span><br><span class="line">	at java<span class="class">.net</span><span class="class">.SocksSocketImpl</span><span class="class">.connect</span>(SocksSocketImpl<span class="class">.java</span>:<span class="number">392</span>)</span><br><span class="line">	at java<span class="class">.net</span><span class="class">.Socket</span><span class="class">.connect</span>(Socket<span class="class">.java</span>:<span class="number">589</span>)</span><br><span class="line">	at java<span class="class">.net</span><span class="class">.Socket</span><span class="class">.connect</span>(Socket<span class="class">.java</span>:<span class="number">538</span>)</span><br><span class="line">	at java<span class="class">.net</span><span class="class">.Socket</span>.&lt;init&gt;(Socket<span class="class">.java</span>:<span class="number">434</span>)</span><br><span class="line">	at java<span class="class">.net</span><span class="class">.Socket</span>.&lt;init&gt;(Socket<span class="class">.java</span>:<span class="number">211</span>)</span><br></pre></td></tr></table></figure>
-<p>需要执行：<code>sudo scutil --set HostName MyName.local</code></p>
-<p>详见：<a href="https://github.com/technomancy/leiningen/issues/1321" target="_blank" rel="external">https://github.com/technomancy/leiningen/issues/1321</a></p>
-<h3 id="创建项目">创建项目</h3><p><code>lein new groupId/artifactId</code>会在当前目录下，生成一个名为“artifactId”的项目，其中groupId和artifactId和Maven里的概念一致。</p>
-<h2 id="Idea">Idea</h2><h3 id="添加La_Clojure插件">添加La Clojure插件</h3><p>打开preferences 》Plugins 》 Browse Repositories， 搜索Clojure， 下载La Clojure。</p>
-<h3 id="新建项目">新建项目</h3><p>打开File 》New 》 Project… 》 Intellij Platform Plugin，选中Clojure，一路Next。</p>
-<p>如果直接打开刚才用<code>lein命令</code>创建的项目，需要在打开的项目上右单击，点击Add Framework Support…，左侧选中Clojure，点击ok。</p>
-
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/05/10/搭建clojure开发环境/">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -528,67 +489,19 @@
         
           <p>Hexo 是一个简单地、轻量地、基于Node的一个静态博客框架。通过Hexo我们可以快速创建自己的博客，然后部署在github pages搭建的免费无限流量的个人博客。</p>
 <h2 id="官方文档">官方文档</h2><blockquote>
-<p>Hexo：<a href="http://hexo.io/docs/" target="_blank" rel="external">http://hexo.io/docs/</a></p>
-<p>GitHub Pages<a href="https://help.github.com/articles/what-are-github-pages/" target="_blank" rel="external">https://help.github.com/articles/what-are-github-pages/</a></p>
+<p>Hexo：<a href="http://hexo.io/docs/">http://hexo.io/docs/</a></p>
+<p>GitHub Pages<a href="https://help.github.com/articles/what-are-github-pages/">https://help.github.com/articles/what-are-github-pages/</a></p>
 </blockquote>
 <h2 id="hexo使用">hexo使用</h2><h3 id="依赖">依赖</h3><ol>
-<li>Node.js 官网：<a href="http://nodejs.org/" target="_blank" rel="external">http://nodejs.org/</a></li>
-<li>Git 官网：<a href="http://git-scm.com/" target="_blank" rel="external">http://git-scm.com/</a></li>
+<li>Node.js 官网：<a href="http://nodejs.org/">http://nodejs.org/</a></li>
+<li>Git 官网：<a href="http://git-scm.com/">http://git-scm.com/</a></li>
 </ol>
-<h3 id="安装">安装</h3><blockquote>
-<p>npm install -g hexo-cli</p>
-</blockquote>
-<h3 id="创建博客">创建博客</h3><blockquote>
-<p>hexo init blog</p>
-</blockquote>
-<p>会在当前目录下创建一个名为“blog”的文件夹，</p>
-<h3 id="安装依赖">安装依赖</h3><blockquote>
-<p>cd blog</p>
-<p>npm install </p>
-</blockquote>
-<p>进入博客目录，由于hexo采用node.js开发，安装所有依赖</p>
-<h3 id="创建文章">创建文章</h3><blockquote>
-<p>hexo new 文章标题</p>
-</blockquote>
-<p>创建一个标题为“文章标题”的博客</p>
-<h3 id="编辑文章">编辑文章</h3><p>直接打开博客目录下source/_posts/文章标题.md文件进行编辑，比如：</p>
-<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">title: "这里是文章标题"</span><br><span class="line">date: 2015-05-08 23:25:35</span><br><span class="line">tags:</span><br><span class="line"><span class="bullet">- </span>标签1</span><br><span class="line"><span class="bullet">- </span>标签2</span><br><span class="line"><span class="header">- 标签3</span><br><span class="line">---</span></span><br><span class="line">这里是文章内容，写点什么呢？</span><br></pre></td></tr></table></figure>
-<h3 id="本地启动">本地启动</h3><blockquote>
-<p>hexo server</p>
-</blockquote>
-<p>启动hexo服务器，通过<a href="http://localhost:4000/" target="_blank" rel="external">http://localhost:4000/</a>访问</p>
-<h3 id="草稿">草稿</h3><blockquote>
-<p>hexo new draft 草稿标题</p>
-</blockquote>
-<p>对于暂时不想公开的文件，可以放草稿里，本地强行预览草稿可通过命令<code>hexo server --drafts</code></p>
-<h3 id="查看帮助">查看帮助</h3><blockquote>
-<p>hexo 或者 hexo help</p>
-</blockquote>
-<h3 id="部署到github">部署到github</h3><ol>
-<li><p>github上创建一个“你的用户名.github.io”的项目，例：yourname.github.io.git</p>
-</li>
-<li><p>修改博客目录下全局配置文件：_config.yml，找到deploy或添加：</p>
-<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">deploy</span>:</span><br><span class="line">  <span class="attribute">type</span>: github</span><br><span class="line">  <span class="attribute">repo</span>: git<span class="variable">@github</span>.<span class="attribute">com</span>:yourname/yourname.github.io.git</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<ol>
-<li><p>执行部署命令：<code>hexo deploy</code></p>
-</li>
-<li><p>用浏览器打开<a href="http://yourname.github.io" target="_blank" rel="external">http://yourname.github.io</a> 访问博客</p>
-</li>
-</ol>
-<h3 id="域名绑定">域名绑定</h3><ol>
-<li><p>域名解析中添加一条cname记录指向yourname.github.io</p>
-</li>
-<li><p>在博客目录source文件夹下创建一个名为“CNAME”的文件，内容为你的域名，重新部署博客</p>
-</li>
-</ol>
-<p>官方文档：<a href="https://help.github.com/articles/setting-up-a-custom-domain-with-github-pages/" target="_blank" rel="external">https://help.github.com/articles/setting-up-a-custom-domain-with-github-pages/</a></p>
-<h2 id="使用nexT模板">使用nexT模板</h2><blockquote>
-<p>官网：<a href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="external">https://github.com/iissnan/hexo-theme-next</a></p>
-<p>wikik：<a href="https://github.com/xirong/hexo-theme-next/wiki" target="_blank" rel="external">https://github.com/xirong/hexo-theme-next/wiki</a></p>
-</blockquote>
-
+<h3 id="安装">安装</h3>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/05/09/使用hexo搭建静态博客/">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -654,13 +567,12 @@
       
         
           <p>以前采用浮动之后，加一个<code>clear:both</code>标签来撑开父层，总觉得不爽，写起来也麻烦，其实可以采用另外的方式。</p>
-<p>旧方式：</p>
-<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="keyword">div</span>&gt;</span><br><span class="line">&lt;<span class="keyword">div</span> style=<span class="string">"float:left;"</span>&gt;&lt;/<span class="keyword">div</span>&gt;</span><br><span class="line">&lt;<span class="keyword">div</span> <span class="type">class</span>=<span class="string">"float:left;"</span>&gt;&lt;/<span class="keyword">div</span>&gt;</span><br><span class="line">&lt;<span class="keyword">div</span> style=<span class="string">"clear:both;"</span>&gt;&lt;/<span class="keyword">div</span>&gt;</span><br><span class="line">&lt;/<span class="keyword">div</span>&gt;</span><br></pre></td></tr></table></figure>
-<p>新方式</p>
-<p>html代码：</p>
-<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="keyword">div</span> <span class="type">class</span>=<span class="string">"clearfix"</span>&gt;</span><br><span class="line">&lt;<span class="keyword">div</span> style=<span class="string">"float:left;"</span>&gt;&lt;/<span class="keyword">div</span>&gt;</span><br><span class="line">&lt;<span class="keyword">div</span> <span class="type">class</span>=<span class="string">"float:left;"</span>&gt;&lt;/<span class="keyword">div</span>&gt;</span><br><span class="line">&lt;/<span class="keyword">div</span>&gt;</span><br></pre></td></tr></table></figure>
-<p>css代码：</p>
-<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class">.clearfix</span><span class="pseudo">:after</span> &#123;       <span class="comment">/*在类名为“clearfix”的元素内最后面加入内容；*/</span></span><br><span class="line">    <span class="attribute">content</span>: <span class="string">"."</span>;     <span class="comment">/*内容为“.”就是一个英文的句号而已。也可以不写。*/</span></span><br><span class="line">    <span class="attribute">display</span>: block;   <span class="comment">/*加入的这个元素转换为块级元素。*/</span></span><br><span class="line">    <span class="attribute">clear</span>: both;     <span class="comment">/*清除左右两边浮动。*/</span></span><br><span class="line">    <span class="attribute">visibility</span>: hidden;     <span class="comment">/*可见度设为隐藏。注意它和display:none;是有区别的。visibility:hidden;仍然占据空间，只是看不到而已；*/</span></span><br><span class="line">    <span class="attribute">line-height</span>: <span class="number">0</span>;    <span class="comment">/*行高为0；*/</span></span><br><span class="line">    <span class="attribute">height</span>: <span class="number">0</span>;     <span class="comment">/*高度为0；*/</span></span><br><span class="line">    <span class="attribute">font-size</span>:<span class="number">0</span>;    <span class="comment">/*字体大小为0；*/</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="class">.clearfix</span> &#123; *<span class="attribute">zoom</span>:<span class="number">1</span>;&#125;   <span class="comment">/*这是针对于IE6的，因为IE6不支持:after伪类，这个神奇的zoom:1让IE6的元素可以清除浮动来包裹内部元素。具体意思的话，不用深究，听说微软的工程师自己都无法解释清楚。height:1%效果也是一样。*/</span></span><br></pre></td></tr></table></figure>
+<h2 id="旧方式：">旧方式：</h2><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="keyword">div</span>&gt;</span><br><span class="line">&lt;<span class="keyword">div</span> style=<span class="string">"float:left;"</span>&gt;&lt;/<span class="keyword">div</span>&gt;</span><br><span class="line">&lt;<span class="keyword">div</span> style=<span class="string">"float:left;"</span>&gt;&lt;/<span class="keyword">div</span>&gt;</span><br><span class="line">&lt;<span class="keyword">div</span> style=<span class="string">"clear:both;"</span>&gt;&lt;/<span class="keyword">div</span>&gt;</span><br><span class="line">&lt;/<span class="keyword">div</span>&gt;</span><br></pre></td></tr></table></figure>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/05/09/CSS浮动DIV撑开父层高度的问题/">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>

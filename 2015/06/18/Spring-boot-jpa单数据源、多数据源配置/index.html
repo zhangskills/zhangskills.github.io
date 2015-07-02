@@ -190,7 +190,7 @@
       
 
       
-        <p>spring boot很多配置都采用自动化，开发起来非常快速，试了一阵子jpa，各种爽歪歪。<br>不过，凡事有利必有弊，自动化封装好，有些个性定制的东西反而不好设置，今天为了配置jpa多数据源，各种郁闷（专业知识不过硬，注定被坑，没办法的事情），最后总算摸出点门路，记录一下（采用mysql）</p>
+        <p>spring boot很多配置都采用自动化，开发起来非常快速，试了一阵子jpa，各种爽歪歪。<br>不过，凡事有利必有弊，自动化封装好，有些个性定制的东西反而不好设置，今天为了配置jpa多数据源，各种郁闷（专业知识不过硬，注定被坑，没办法的事情），最后总算摸出点门路，记录一下（采用mysql）<br><a id="more"></a></p>
 <h2 id="单数据源设置：">单数据源设置：</h2><ol>
 <li><p>application.properties中添加：</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">spring<span class="class">.datasource</span><span class="class">.name</span>=mysql</span><br><span class="line">spring<span class="class">.datasource</span><span class="class">.url</span>=jdbc:mysql:<span class="comment">//localhost/test?characterEncoding=UTF-8&amp;autoReconnect=true</span></span><br><span class="line">spring<span class="class">.datasource</span><span class="class">.username</span>=root</span><br><span class="line">spring<span class="class">.datasource</span><span class="class">.password</span>=root</span><br><span class="line">spring<span class="class">.datasource</span><span class="class">.driver-class-name</span>=com<span class="class">.mysql</span><span class="class">.jdbc</span><span class="class">.Driver</span></span><br></pre></td></tr></table></figure>

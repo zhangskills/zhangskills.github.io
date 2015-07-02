@@ -191,12 +191,15 @@
 
       
         <p>以前采用浮动之后，加一个<code>clear:both</code>标签来撑开父层，总觉得不爽，写起来也麻烦，其实可以采用另外的方式。</p>
-<p>旧方式：</p>
-<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="keyword">div</span>&gt;</span><br><span class="line">&lt;<span class="keyword">div</span> style=<span class="string">"float:left;"</span>&gt;&lt;/<span class="keyword">div</span>&gt;</span><br><span class="line">&lt;<span class="keyword">div</span> <span class="type">class</span>=<span class="string">"float:left;"</span>&gt;&lt;/<span class="keyword">div</span>&gt;</span><br><span class="line">&lt;<span class="keyword">div</span> style=<span class="string">"clear:both;"</span>&gt;&lt;/<span class="keyword">div</span>&gt;</span><br><span class="line">&lt;/<span class="keyword">div</span>&gt;</span><br></pre></td></tr></table></figure>
-<p>新方式</p>
+<h2 id="旧方式：">旧方式：</h2><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="keyword">div</span>&gt;</span><br><span class="line">&lt;<span class="keyword">div</span> style=<span class="string">"float:left;"</span>&gt;&lt;/<span class="keyword">div</span>&gt;</span><br><span class="line">&lt;<span class="keyword">div</span> style=<span class="string">"float:left;"</span>&gt;&lt;/<span class="keyword">div</span>&gt;</span><br><span class="line">&lt;<span class="keyword">div</span> style=<span class="string">"clear:both;"</span>&gt;&lt;/<span class="keyword">div</span>&gt;</span><br><span class="line">&lt;/<span class="keyword">div</span>&gt;</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="新方式">新方式</h2><blockquote>
 <p>html代码：</p>
+</blockquote>
 <figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="keyword">div</span> <span class="type">class</span>=<span class="string">"clearfix"</span>&gt;</span><br><span class="line">&lt;<span class="keyword">div</span> style=<span class="string">"float:left;"</span>&gt;&lt;/<span class="keyword">div</span>&gt;</span><br><span class="line">&lt;<span class="keyword">div</span> <span class="type">class</span>=<span class="string">"float:left;"</span>&gt;&lt;/<span class="keyword">div</span>&gt;</span><br><span class="line">&lt;/<span class="keyword">div</span>&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
 <p>css代码：</p>
+</blockquote>
 <figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class">.clearfix</span><span class="pseudo">:after</span> &#123;       <span class="comment">/*在类名为“clearfix”的元素内最后面加入内容；*/</span></span><br><span class="line">    <span class="attribute">content</span>: <span class="string">"."</span>;     <span class="comment">/*内容为“.”就是一个英文的句号而已。也可以不写。*/</span></span><br><span class="line">    <span class="attribute">display</span>: block;   <span class="comment">/*加入的这个元素转换为块级元素。*/</span></span><br><span class="line">    <span class="attribute">clear</span>: both;     <span class="comment">/*清除左右两边浮动。*/</span></span><br><span class="line">    <span class="attribute">visibility</span>: hidden;     <span class="comment">/*可见度设为隐藏。注意它和display:none;是有区别的。visibility:hidden;仍然占据空间，只是看不到而已；*/</span></span><br><span class="line">    <span class="attribute">line-height</span>: <span class="number">0</span>;    <span class="comment">/*行高为0；*/</span></span><br><span class="line">    <span class="attribute">height</span>: <span class="number">0</span>;     <span class="comment">/*高度为0；*/</span></span><br><span class="line">    <span class="attribute">font-size</span>:<span class="number">0</span>;    <span class="comment">/*字体大小为0；*/</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="class">.clearfix</span> &#123; *<span class="attribute">zoom</span>:<span class="number">1</span>;&#125;   <span class="comment">/*这是针对于IE6的，因为IE6不支持:after伪类，这个神奇的zoom:1让IE6的元素可以清除浮动来包裹内部元素。具体意思的话，不用深究，听说微软的工程师自己都无法解释清楚。height:1%效果也是一样。*/</span></span><br></pre></td></tr></table></figure>
       
     </div>
@@ -336,7 +339,7 @@
           <div class="post-toc">
             
             
-              <p class="post-toc-empty">此文章未包含目录</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#旧方式："><span class="nav-number">1.</span> <span class="nav-text">旧方式：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#新方式"><span class="nav-number">2.</span> <span class="nav-text">新方式</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>

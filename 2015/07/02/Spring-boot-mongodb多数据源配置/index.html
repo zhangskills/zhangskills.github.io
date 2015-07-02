@@ -190,7 +190,11 @@
       
 
       
-        <ol>
+        <p>够折腾的，网上找了半天也没找到配置方式，参考jpa的配置，采用分别指定MongoTemplate的方式解决。<a id="more"></a></p>
+<blockquote>
+<p>配置步骤：</p>
+</blockquote>
+<ol>
 <li><p>application.properties中添加：</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">spring<span class="class">.data</span><span class="class">.mongodb</span>.<span class="number">0</span>.host=host1</span><br><span class="line">spring<span class="class">.data</span><span class="class">.mongodb</span>.<span class="number">0</span>.port=<span class="number">27017</span></span><br><span class="line">spring<span class="class">.data</span><span class="class">.mongodb</span>.<span class="number">0</span>.database=database1</span><br><span class="line"></span><br><span class="line">spring<span class="class">.data</span><span class="class">.mongodb</span>.<span class="number">1</span>.host=host2</span><br><span class="line">spring<span class="class">.data</span><span class="class">.mongodb</span>.<span class="number">1</span>.port=<span class="number">27017</span></span><br><span class="line">spring<span class="class">.data</span><span class="class">.mongodb</span>.<span class="number">1</span>.database=database2</span><br></pre></td></tr></table></figure>
 </li>
