@@ -22,7 +22,7 @@
 
 
 
-  <meta name="keywords" content="solr," />
+  <meta name="keywords" content="mongodb,spring,spring boot," />
 
 
 
@@ -55,7 +55,7 @@
 
 
 
-  <title> solr更新单个字段 // 程序员Jack的自留地 </title>
+  <title> Spring boot mongodb多数据源配置 // 程序员Jack的自留地 </title>
 </head>
 
 <body>
@@ -158,7 +158,7 @@
           
           
             
-              solr更新单个字段
+              Spring boot mongodb多数据源配置
             
           
         </h1>
@@ -166,7 +166,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          发表于 2015-06-19
+          发表于 2015-07-02
         </span>
 
         
@@ -175,8 +175,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/06/19/solr更新单个字段/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2015/06/19/solr更新单个字段/"></span>
+            <a href="/2015/07/02/Spring-boot-mongodb多数据源配置/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/02/Spring-boot-mongodb多数据源配置/"></span>
             </a>
           </span>
           
@@ -190,12 +190,20 @@
       
 
       
-        <p>一直以来更新solr文档的时候都是把文档查出来，修改字段，整个文档更新，最近发现其实solr支持单个字段的更新操作的，不过从4.0以后开始支持，官方的叫法是Atomic Updates，支持set、add、inc。</p>
-<p>官方文档：<a href="https://wiki.apache.org/solr/Atomic_Updates" target="_blank" rel="external">https://wiki.apache.org/solr/Atomic_Updates</a></p>
-<p>示例：</p>
-<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">curl <span class="symbol">http:</span>/<span class="regexp">/localhost:8983/solr</span><span class="regexp">/update -H 'Content-type:application/json</span><span class="string">' -d '</span></span><br><span class="line">[</span><br><span class="line"> &#123;</span><br><span class="line">  <span class="string">"id"</span>        <span class="symbol">:</span> <span class="string">"TestDoc1"</span>,</span><br><span class="line">  <span class="string">"title"</span>     <span class="symbol">:</span> &#123;<span class="string">"set"</span><span class="symbol">:<span class="string">"test1"</span></span>&#125;,</span><br><span class="line">  <span class="string">"revision"</span>  <span class="symbol">:</span> &#123;<span class="string">"inc"</span><span class="symbol">:</span><span class="number">3</span>&#125;,</span><br><span class="line">  <span class="string">"publisher"</span> <span class="symbol">:</span> &#123;<span class="string">"add"</span><span class="symbol">:<span class="string">"TestPublisher"</span></span>&#125;</span><br><span class="line"> &#125;,</span><br><span class="line"> &#123;</span><br><span class="line">  <span class="string">"id"</span>        <span class="symbol">:</span> <span class="string">"TestDoc2"</span>,</span><br><span class="line">  <span class="string">"publisher"</span> <span class="symbol">:</span> &#123;<span class="string">"add"</span><span class="symbol">:<span class="string">"TestPublisher"</span></span>&#125;</span><br><span class="line"> &#125;</span><br><span class="line">]<span class="string">'</span></span><br></pre></td></tr></table></figure>
-<p>java代码：</p>
-<figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">SolrInputDocument solrInputDocument = <span class="keyword">new</span> SolrInputDocument();</span><br><span class="line">solrInputDocument.addField(<span class="string">"id"</span>, id);</span><br><span class="line"></span><br><span class="line">Map&lt;<span class="keyword">String</span>, <span class="keyword">String</span> &gt; operation = <span class="keyword">new</span> <span class="keyword">HashMap</span>&lt;&gt;();</span><br><span class="line">operation.put(<span class="string">"set"</span>, <span class="string">"test1"</span>);</span><br><span class="line">solrInputDocument.addField(<span class="string">"title"</span>, operation);</span><br><span class="line"></span><br><span class="line">solrServer.<span class="built_in">add</span>(solrInputDocument);</span><br><span class="line">solrServer.commit();</span><br></pre></td></tr></table></figure>
+        <ol>
+<li><p>application.properties中添加：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">spring<span class="class">.data</span><span class="class">.mongodb</span>.<span class="number">0</span>.host=host1</span><br><span class="line">spring<span class="class">.data</span><span class="class">.mongodb</span>.<span class="number">0</span>.port=<span class="number">27017</span></span><br><span class="line">spring<span class="class">.data</span><span class="class">.mongodb</span>.<span class="number">0</span>.database=database1</span><br><span class="line"></span><br><span class="line">spring<span class="class">.data</span><span class="class">.mongodb</span>.<span class="number">1</span>.host=host2</span><br><span class="line">spring<span class="class">.data</span><span class="class">.mongodb</span>.<span class="number">1</span>.port=<span class="number">27017</span></span><br><span class="line">spring<span class="class">.data</span><span class="class">.mongodb</span>.<span class="number">1</span>.database=database2</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>设置主数据源MongoRepositoryFirstConfig类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@Configuration</span></span><br><span class="line"><span class="annotation">@EnableMongoRepositories</span>(basePackages = <span class="string">"com.acfun.repository"</span>, mongoTemplateRef = <span class="string">"firstMongoTemplate"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MongoRepositoryFirstConfig</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="annotation">@Primary</span></span><br><span class="line">  <span class="annotation">@Bean</span></span><br><span class="line">  <span class="annotation">@ConfigurationProperties</span>(prefix = <span class="string">"spring.data.mongodb.0"</span>)</span><br><span class="line">  <span class="function"><span class="keyword">public</span> MongoProperties <span class="title">firstMongoProperties</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> MongoProperties();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="annotation">@Primary</span></span><br><span class="line">  <span class="annotation">@Bean</span>(name = <span class="string">"firstMongoTemplate"</span>)</span><br><span class="line">  <span class="function"><span class="keyword">public</span> MongoTemplate <span class="title">firstMongoTemplate</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    MongoProperties mongoProperties = firstMongoProperties();</span><br><span class="line">    MongoClient mongoClient = mongoProperties.createMongoClient(<span class="keyword">null</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> MongoTemplate(mongoClient, mongoProperties.getDatabase());</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>设置第二数据源MongoRepositorySecondConfig类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@Configuration</span></span><br><span class="line"><span class="annotation">@EnableMongoRepositories</span>(basePackages = <span class="string">"com.acfun.repository_old"</span>, mongoTemplateRef = <span class="string">"secondMongoTemplate"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MongoRepositorySecondConfig</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="annotation">@Bean</span></span><br><span class="line">  <span class="annotation">@ConfigurationProperties</span>(prefix = <span class="string">"spring.data.mongodb.1"</span>)</span><br><span class="line">  <span class="function"><span class="keyword">public</span> MongoProperties <span class="title">secondMongoProperties</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> MongoProperties();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="annotation">@Bean</span>(name = <span class="string">"secondMongoTemplate"</span>)</span><br><span class="line">  <span class="function"><span class="keyword">public</span> MongoTemplate <span class="title">secondMongoTemplate</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    MongoProperties mongoProperties = secondMongoProperties();</span><br><span class="line">    MongoClient mongoClient = mongoProperties.createMongoClient(<span class="keyword">null</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> MongoTemplate(mongoClient, mongoProperties.getDatabase());</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建Entity类、Repository类，ok</p>
+</li>
+</ol>
+
       
     </div>
 
@@ -203,7 +211,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/solr/"> #solr </a>
+            <a href="/tags/mongodb/"> #mongodb </a>
+          
+            <a href="/tags/spring/"> #spring </a>
+          
+            <a href="/tags/spring-boot/"> #spring boot </a>
           
         </div>
       
@@ -212,13 +224,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/07/02/Spring-boot-mongodb多数据源配置/">Spring boot mongodb多数据源配置</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/06/18/Spring-boot-jpa单数据源、多数据源配置/">Spring boot jpa单数据源、多数据源配置</a>
+              <a href="/2015/06/19/solr更新单个字段/">solr更新单个字段</a>
             
           </div>
         </div>
@@ -236,8 +246,8 @@
     
       <div class="comments" id="comments">
         
-          <div class="ds-thread" data-thread-key="2015/06/19/solr更新单个字段/"
-               data-title="solr更新单个字段" data-url="http://blog.withword.com/2015/06/19/solr更新单个字段/">
+          <div class="ds-thread" data-thread-key="2015/07/02/Spring-boot-mongodb多数据源配置/"
+               data-title="Spring boot mongodb多数据源配置" data-url="http://blog.withword.com/2015/07/02/Spring-boot-mongodb多数据源配置/">
           </div>
         
       </div>

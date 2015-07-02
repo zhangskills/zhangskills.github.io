@@ -160,6 +160,84 @@
           
           
             
+              <a class="post-title-link" href="/2015/07/02/Spring-boot-mongodb多数据源配置/">
+                Spring boot mongodb多数据源配置
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于 2015-07-02
+        </span>
+
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/07/02/Spring-boot-mongodb多数据源配置/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/02/Spring-boot-mongodb多数据源配置/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <ol>
+<li><p>application.properties中添加：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">spring<span class="class">.data</span><span class="class">.mongodb</span>.<span class="number">0</span>.host=host1</span><br><span class="line">spring<span class="class">.data</span><span class="class">.mongodb</span>.<span class="number">0</span>.port=<span class="number">27017</span></span><br><span class="line">spring<span class="class">.data</span><span class="class">.mongodb</span>.<span class="number">0</span>.database=database1</span><br><span class="line"></span><br><span class="line">spring<span class="class">.data</span><span class="class">.mongodb</span>.<span class="number">1</span>.host=host2</span><br><span class="line">spring<span class="class">.data</span><span class="class">.mongodb</span>.<span class="number">1</span>.port=<span class="number">27017</span></span><br><span class="line">spring<span class="class">.data</span><span class="class">.mongodb</span>.<span class="number">1</span>.database=database2</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>设置主数据源MongoRepositoryFirstConfig类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@Configuration</span></span><br><span class="line"><span class="annotation">@EnableMongoRepositories</span>(basePackages = <span class="string">"com.acfun.repository"</span>, mongoTemplateRef = <span class="string">"firstMongoTemplate"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MongoRepositoryFirstConfig</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="annotation">@Primary</span></span><br><span class="line">  <span class="annotation">@Bean</span></span><br><span class="line">  <span class="annotation">@ConfigurationProperties</span>(prefix = <span class="string">"spring.data.mongodb.0"</span>)</span><br><span class="line">  <span class="function"><span class="keyword">public</span> MongoProperties <span class="title">firstMongoProperties</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> MongoProperties();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="annotation">@Primary</span></span><br><span class="line">  <span class="annotation">@Bean</span>(name = <span class="string">"firstMongoTemplate"</span>)</span><br><span class="line">  <span class="function"><span class="keyword">public</span> MongoTemplate <span class="title">firstMongoTemplate</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    MongoProperties mongoProperties = firstMongoProperties();</span><br><span class="line">    MongoClient mongoClient = mongoProperties.createMongoClient(<span class="keyword">null</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> MongoTemplate(mongoClient, mongoProperties.getDatabase());</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>设置第二数据源MongoRepositorySecondConfig类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@Configuration</span></span><br><span class="line"><span class="annotation">@EnableMongoRepositories</span>(basePackages = <span class="string">"com.acfun.repository_old"</span>, mongoTemplateRef = <span class="string">"secondMongoTemplate"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MongoRepositorySecondConfig</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="annotation">@Bean</span></span><br><span class="line">  <span class="annotation">@ConfigurationProperties</span>(prefix = <span class="string">"spring.data.mongodb.1"</span>)</span><br><span class="line">  <span class="function"><span class="keyword">public</span> MongoProperties <span class="title">secondMongoProperties</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> MongoProperties();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="annotation">@Bean</span>(name = <span class="string">"secondMongoTemplate"</span>)</span><br><span class="line">  <span class="function"><span class="keyword">public</span> MongoTemplate <span class="title">secondMongoTemplate</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    MongoProperties mongoProperties = secondMongoProperties();</span><br><span class="line">    MongoClient mongoClient = mongoProperties.createMongoClient(<span class="keyword">null</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> MongoTemplate(mongoClient, mongoProperties.getDatabase());</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建Entity类、Repository类，ok</p>
+</li>
+</ol>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2015/06/19/solr更新单个字段/">
                 solr更新单个字段
               </a>
@@ -701,7 +779,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">6</span>
+              <span class="site-state-item-count">7</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -715,7 +793,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-count">12</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
