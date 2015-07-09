@@ -24,7 +24,7 @@
 
 
 
-  <meta name="keywords" content="css,html," />
+  <meta name="keywords" content="ssh,ubuntu," />
 
 
 
@@ -57,7 +57,7 @@
 
 
 
-  <title> CSS浮动DIV撑开父层高度的问题 // 程序员Jack的自留地 </title>
+  <title> ubuntu配置publickey无密码登录 // 程序员Jack的自留地 </title>
 </head>
 
 <body>
@@ -160,7 +160,7 @@
           
           
             
-              CSS浮动DIV撑开父层高度的问题
+              ubuntu配置publickey无密码登录
             
           
         </h1>
@@ -168,7 +168,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          发表于 2015-05-09
+          发表于 2015-07-09
         </span>
 
         
@@ -177,8 +177,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/05/09/CSS浮动DIV撑开父层高度的问题/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/09/CSS浮动DIV撑开父层高度的问题/"></span>
+            <a href="/2015/07/09/ubuntu配置publickey无密码登录/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/09/ubuntu配置publickey无密码登录/"></span>
             </a>
           </span>
           
@@ -192,17 +192,36 @@
       
 
       
-        <p>以前采用浮动之后，加一个<code>clear:both</code>标签来撑开父层，总觉得不爽，写起来也麻烦，其实可以采用另外的方式。</p>
-<h2 id="旧方式：">旧方式：</h2><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="keyword">div</span>&gt;</span><br><span class="line">&lt;<span class="keyword">div</span> style=<span class="string">"float:left;"</span>&gt;&lt;/<span class="keyword">div</span>&gt;</span><br><span class="line">&lt;<span class="keyword">div</span> style=<span class="string">"float:left;"</span>&gt;&lt;/<span class="keyword">div</span>&gt;</span><br><span class="line">&lt;<span class="keyword">div</span> style=<span class="string">"clear:both;"</span>&gt;&lt;/<span class="keyword">div</span>&gt;</span><br><span class="line">&lt;/<span class="keyword">div</span>&gt;</span><br></pre></td></tr></table></figure>
-<a id="more"></a>
-<h2 id="新方式">新方式</h2><blockquote>
-<p>html代码：</p>
-</blockquote>
-<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="keyword">div</span> <span class="type">class</span>=<span class="string">"clearfix"</span>&gt;</span><br><span class="line">&lt;<span class="keyword">div</span> style=<span class="string">"float:left;"</span>&gt;&lt;/<span class="keyword">div</span>&gt;</span><br><span class="line">&lt;<span class="keyword">div</span> <span class="type">class</span>=<span class="string">"float:left;"</span>&gt;&lt;/<span class="keyword">div</span>&gt;</span><br><span class="line">&lt;/<span class="keyword">div</span>&gt;</span><br></pre></td></tr></table></figure>
+        <p>平时的时候只要在用户根目录下authorized_keys文件中添加pubkey就ok了，今天一台新服务器怎么设置都是不行，登录老提示输入密码，最后终于解决，记录一下步骤：</p>
+<h2 id="基本步骤">基本步骤</h2><a id="more"></a>
+<ol>
+<li><p>安装好ssh</p>
 <blockquote>
-<p>css代码：</p>
+<p>apt-get install ssh</p>
 </blockquote>
-<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class">.clearfix</span><span class="pseudo">:after</span> &#123;       <span class="comment">/*在类名为“clearfix”的元素内最后面加入内容；*/</span></span><br><span class="line">    <span class="attribute">content</span>: <span class="string">"."</span>;     <span class="comment">/*内容为“.”就是一个英文的句号而已。也可以不写。*/</span></span><br><span class="line">    <span class="attribute">display</span>: block;   <span class="comment">/*加入的这个元素转换为块级元素。*/</span></span><br><span class="line">    <span class="attribute">clear</span>: both;     <span class="comment">/*清除左右两边浮动。*/</span></span><br><span class="line">    <span class="attribute">visibility</span>: hidden;     <span class="comment">/*可见度设为隐藏。注意它和display:none;是有区别的。visibility:hidden;仍然占据空间，只是看不到而已；*/</span></span><br><span class="line">    <span class="attribute">line-height</span>: <span class="number">0</span>;    <span class="comment">/*行高为0；*/</span></span><br><span class="line">    <span class="attribute">height</span>: <span class="number">0</span>;     <span class="comment">/*高度为0；*/</span></span><br><span class="line">    <span class="attribute">font-size</span>:<span class="number">0</span>;    <span class="comment">/*字体大小为0；*/</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="class">.clearfix</span> &#123; *<span class="attribute">zoom</span>:<span class="number">1</span>;&#125;   <span class="comment">/*这是针对于IE6的，因为IE6不支持:after伪类，这个神奇的zoom:1让IE6的元素可以清除浮动来包裹内部元素。具体意思的话，不用深究，听说微软的工程师自己都无法解释清楚。height:1%效果也是一样。*/</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编辑sshd_config配置文件，配置openSSH为允许PubkeyAuthentication认证</p>
+<blockquote>
+<p>vim /etc/ssh/sshd_config</p>
+</blockquote>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">PubkeyAuthentication</span> <span class="built_in">yes</span></span><br><span class="line">AuthorizedKeysFile %h/.ssh/authorized_keys <span class="comment">#pubkey位置</span></span><br><span class="line">useDNS <span class="built_in">no</span> <span class="comment">#不改的话ssh客户端连接的时候会很慢。</span></span><br></pre></td></tr></table></figure>
+<p>同时.ssh目录的权限必须是700，authorized_keys的权限必须是600</p>
+</li>
+</ol>
+<ol>
+<li><p>把客户端生成pubkey（默认在~/.ssh/id_rsa.pub）添加到服务器authorized_keys中；</p>
+</li>
+<li><p>ok收工</p>
+</li>
+</ol>
+<h2 id="出现问题及调试过程">出现问题及调试过程</h2><p>正常情况下就ok，但遇到了非正常情况，一直提示输入密码，只好打开var/log/auth.log文件进行查看错误日志，发现日志中，登录时会提示：<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Address <span class="number">192.168</span>.200.74 maps <span class="keyword">to</span> localhost, <span class="keyword">but</span> this <span class="keyword">does</span> <span class="keyword">not</span> map <span class="keyword">back</span> <span class="keyword">to</span> <span class="keyword">the</span> address - POSSIBLE BREAK-IN ATTEMPT!</span><br></pre></td></tr></table></figure></p>
+<p>网上找到一篇文章<a href="http://www.tuicool.com/articles/ABzemm" target="_blank" rel="external">《ssh连接报警does not map back to the address - POSSIBLE BREAK》</a>，把/etc/ssh/ssh_config中设置<code>GSSAPIAuthentication no</code>就ok了，在stackoverflow上看到一段说明：</p>
+<blockquote>
+<p>Try removing box1 IP from ~/.ssh/known_hosts, so it renews. Perhaps ssh disables key authentication due to possible ‘man in the middle’ attack.</p>
+<p>If it won’t help, add line<br>GSSAPIAuthentication no<br>in your /etc/ssh/ssh_config file.</p>
+</blockquote>
+<p>是不是GSSAPI认证会把客户端的信息存入~/.ssh/known_hosts中，如果不同客户端用相同ip进行登录的时候会就会判定为攻击，这个地方没看明白，也不知道关闭之后会带来什么风险，知道的大神可以再解释下</p>
+
       
     </div>
 
@@ -210,9 +229,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/css/"> #css </a>
+            <a href="/tags/ssh/"> #ssh </a>
           
-            <a href="/tags/html/"> #html </a>
+            <a href="/tags/ubuntu/"> #ubuntu </a>
           
         </div>
       
@@ -221,13 +240,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/05/09/使用hexo搭建静态博客/">使用hexo搭建静态博客</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/05/08/restart-a-blog/">重新开始写博客</a>
+              <a href="/2015/07/02/Spring-boot-mongodb多数据源配置/">Spring boot mongodb多数据源配置</a>
             
           </div>
         </div>
@@ -247,8 +264,8 @@
     
       <div class="comments" id="comments">
         
-          <div class="ds-thread" data-thread-key="2015/05/09/CSS浮动DIV撑开父层高度的问题/"
-               data-title="CSS浮动DIV撑开父层高度的问题" data-url="http://blog.withword.com/2015/05/09/CSS浮动DIV撑开父层高度的问题/">
+          <div class="ds-thread" data-thread-key="2015/07/09/ubuntu配置publickey无密码登录/"
+               data-title="ubuntu配置publickey无密码登录" data-url="http://blog.withword.com/2015/07/09/ubuntu配置publickey无密码登录/">
           </div>
         
       </div>
@@ -347,7 +364,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#旧方式："><span class="nav-number">1.</span> <span class="nav-text">旧方式：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#新方式"><span class="nav-number">2.</span> <span class="nav-text">新方式</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本步骤"><span class="nav-number">1.</span> <span class="nav-text">基本步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#出现问题及调试过程"><span class="nav-number">2.</span> <span class="nav-text">出现问题及调试过程</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
