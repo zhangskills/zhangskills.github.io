@@ -24,7 +24,7 @@
 
 
 
-  <meta name="keywords" content="hexo,搭建," />
+  <meta name="keywords" content="spring,spring boot," />
 
 
 
@@ -57,7 +57,7 @@
 
 
 
-  <title> 使用hexo搭建静态博客 // 程序员Jack的自留地 </title>
+  <title> Spring Boot采用无parent pom方式注意事项 // 程序员Jack的自留地 </title>
 </head>
 
 <body>
@@ -160,7 +160,7 @@
           
           
             
-              使用hexo搭建静态博客
+              Spring Boot采用无parent pom方式注意事项
             
           
         </h1>
@@ -168,7 +168,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          发表于 2015-05-09
+          发表于 2015-07-10
         </span>
 
         
@@ -177,8 +177,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/05/09/使用hexo搭建静态博客/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/09/使用hexo搭建静态博客/"></span>
+            <a href="/2015/07/10/Spring-Boot使用Maven的基本配置/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/10/Spring-Boot使用Maven的基本配置/"></span>
             </a>
           </span>
           
@@ -192,70 +192,20 @@
       
 
       
-        <p>Hexo 是一个简单地、轻量地、基于Node的一个静态博客框架。通过Hexo我们可以快速创建自己的博客，然后部署在github pages搭建的免费无限流量的个人博客。</p>
-<h2 id="官方文档">官方文档</h2><blockquote>
-<p>Hexo：<a href="http://hexo.io/docs/" target="_blank" rel="external">http://hexo.io/docs/</a></p>
-<p>GitHub Pages<a href="https://help.github.com/articles/what-are-github-pages/" target="_blank" rel="external">https://help.github.com/articles/what-are-github-pages/</a></p>
-</blockquote>
-<h2 id="hexo使用">hexo使用</h2><h3 id="依赖">依赖</h3><ol>
-<li>Node.js 官网：<a href="http://nodejs.org/" target="_blank" rel="external">http://nodejs.org/</a></li>
-<li>Git 官网：<a href="http://git-scm.com/" target="_blank" rel="external">http://git-scm.com/</a></li>
-</ol>
-<h3 id="安装">安装</h3><a id="more"></a>
-<blockquote>
-<p>npm install -g hexo-cli</p>
-</blockquote>
-<h3 id="创建博客">创建博客</h3><blockquote>
-<p>hexo init blog</p>
-</blockquote>
-<p>会在当前目录下创建一个名为“blog”的文件夹，</p>
-<h3 id="安装依赖">安装依赖</h3><blockquote>
-<p>cd blog</p>
-<p>npm install </p>
-</blockquote>
-<p>进入博客目录，由于hexo采用node.js开发，安装所有依赖</p>
-<h3 id="创建文章">创建文章</h3><blockquote>
-<p>hexo new 文章标题</p>
-</blockquote>
-<p>创建一个标题为“文章标题”的博客</p>
-<h3 id="编辑文章">编辑文章</h3><p>直接打开博客目录下source/_posts/文章标题.md文件进行编辑，比如：</p>
-<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">title: "这里是文章标题"</span><br><span class="line">date: 2015-05-08 23:25:35</span><br><span class="line">tags:</span><br><span class="line"><span class="bullet">- </span>标签1</span><br><span class="line"><span class="bullet">- </span>标签2</span><br><span class="line"><span class="header">- 标签3</span><br><span class="line">---</span></span><br><span class="line">这里是文章内容，写点什么呢？</span><br></pre></td></tr></table></figure>
-<h3 id="本地启动">本地启动</h3><blockquote>
-<p>hexo server</p>
-</blockquote>
-<p>启动hexo服务器，通过<a href="http://localhost:4000/" target="_blank" rel="external">http://localhost:4000/</a>访问</p>
-<h3 id="草稿">草稿</h3><blockquote>
-<p>hexo new draft 草稿标题</p>
-</blockquote>
-<p>对于暂时不想公开的文件，可以放草稿里，本地强行预览草稿可通过命令<code>hexo server --drafts</code></p>
-<h3 id="查看帮助">查看帮助</h3><blockquote>
-<p>hexo 或者 hexo help</p>
-</blockquote>
-<h3 id="部署到github">部署到github</h3><ol>
-<li><p>github上创建一个“你的用户名.github.io”的项目，例：yourname.github.io.git</p>
-</li>
-<li><p>修改博客目录下全局配置文件：_config.yml，找到deploy或添加：</p>
-<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">deploy</span>:</span><br><span class="line">  <span class="attribute">type</span>: github</span><br><span class="line">  <span class="attribute">repo</span>: git<span class="variable">@github</span>.<span class="attribute">com</span>:yourname/yourname.github.io.git</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<ol>
-<li><p>执行部署命令：<code>hexo deploy</code></p>
-</li>
-<li><p>用浏览器打开<a href="http://yourname.github.io" target="_blank" rel="external">http://yourname.github.io</a> 访问博客</p>
-</li>
-</ol>
-<h3 id="域名绑定">域名绑定</h3><ol>
-<li><p>域名解析中添加一条cname记录指向yourname.github.io</p>
-</li>
-<li><p>在博客目录source文件夹下创建一个名为“CNAME”的文件，内容为你的域名，重新部署博客</p>
-</li>
-</ol>
-<p>官方文档：<a href="https://help.github.com/articles/setting-up-a-custom-domain-with-github-pages/" target="_blank" rel="external">https://help.github.com/articles/setting-up-a-custom-domain-with-github-pages/</a></p>
-<h2 id="使用nexT模板">使用nexT模板</h2><blockquote>
-<p>官网：<a href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="external">https://github.com/iissnan/hexo-theme-next</a></p>
-<p>wikik：<a href="https://github.com/xirong/hexo-theme-next/wiki" target="_blank" rel="external">https://github.com/xirong/hexo-theme-next/wiki</a></p>
-</blockquote>
-
+        <p>Spring Boot默认采用继承<code>spring-boot-starter-parent</code>方式，然后声明一个或多个“<a href="http://docs.spring.io/spring-boot/docs/current-SNAPSHOT/reference/htmlsingle/#using-boot-starter-poms" target="_blank" rel="external">Starter POMs</a>”依赖，这种方式使用起来非常方便。</p>
+<h3 id="继承starter_parent">继承starter parent</h3><p>想配置你的项目继承spring-boot-starter-parent只需要简单地设置parent为：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- Inherit defaults from Spring Boot --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">parent</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>spring-boot-starter-parent<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">version</span>&gt;</span>1.3.0.BUILD-SNAPSHOT<span class="tag">&lt;/<span class="title">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">parent</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><strong>注：</strong> 如果需要导入其他的<a href="http://docs.spring.io/spring-boot/docs/current-SNAPSHOT/reference/htmlsingle/#using-boot-starter-poms" target="_blank" rel="external">starters</a>，你可以放心的省略版本号。</p>
+<a id="more"></a>
+<p>但不是每个人都喜欢继承spring-boot-starter-parent POM。你可能需要使用公司标准parent，或你可能倾向于显式声明所有Maven配置。</p>
+<h3 id="使用没有父POM的Spring_Boot">使用没有父POM的Spring Boot</h3><p>如果你不使用spring-boot-starter-parent，通过使用一个scope=import的依赖，你仍能获取到依赖管理的好处</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">dependencyManagement</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="title">dependencies</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">dependency</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!-- Import dependency management from Spring Boot --&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="title">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>spring-boot-dependencies<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="title">version</span>&gt;</span>1.2.5.RELEASE<span class="tag">&lt;/<span class="title">version</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="title">type</span>&gt;</span>pom<span class="tag">&lt;/<span class="title">type</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="title">scope</span>&gt;</span>import<span class="tag">&lt;/<span class="title">scope</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="title">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">dependencies</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">dependencyManagement</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="改变Java版本">改变Java版本</h3><p>Spring Boot默认编译级别为Java 1.6，建议使用最新的Java版本</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">properties</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">java.version</span>&gt;</span>1.8<span class="tag">&lt;/<span class="title">java.version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">properties</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="添加Spring_Boot_Maven插件">添加Spring Boot Maven插件</h3><p>Spring Boot包含一个Maven插件，它可以将项目打包成一个可执行jar或war包</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">build</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">plugins</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">plugin</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="title">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="title">plugin</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">plugins</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">build</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="编译war时可能遇到的问题">编译war时可能遇到的问题</h2><h3 id="为当前内置的web容器依赖添加provided，防止内置web容器jar生成到WEB-INF/lib目录下">为当前内置的web容器依赖添加<scope>provided</scope>，防止内置web容器jar生成到WEB-INF/lib目录下</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>spring-boot-starter-tomcat<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">scope</span>&gt;</span>provided<span class="tag">&lt;/<span class="title">scope</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="如果采用无父POM的Spring_Boot、且无web-xml方式，添加war默认插件配置（参考自：stackoverflow）">如果采用无父POM的Spring Boot、且无web.xml方式，添加war默认插件配置（参考自：<a href="http://stackoverflow.com/questions/23114155/spring-boot-without-parent-pom-xml-cannot-generate-war-packaging" target="_blank" rel="external">stackoverflow</a>）</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">plugin</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>maven-war-plugin<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">configuration</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">failOnMissingWebXml</span>&gt;</span>false<span class="tag">&lt;/<span class="title">failOnMissingWebXml</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">configuration</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">plugin</span>&gt;</span></span><br></pre></td></tr></table></figure>
       
     </div>
 
@@ -263,9 +213,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/hexo/"> #hexo </a>
+            <a href="/tags/spring/"> #spring </a>
           
-            <a href="/tags/搭建/"> #搭建 </a>
+            <a href="/tags/spring-boot/"> #spring boot </a>
           
         </div>
       
@@ -274,13 +224,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/05/10/搭建clojure开发环境/">搭建clojure开发环境</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/05/09/CSS浮动DIV撑开父层高度的问题/">CSS浮动DIV撑开父层高度的问题</a>
+              <a href="/2015/07/09/ubuntu配置publickey无密码登录/">ubuntu配置publickey无密码登录</a>
             
           </div>
         </div>
@@ -300,8 +248,8 @@
     
       <div class="comments" id="comments">
         
-          <div class="ds-thread" data-thread-key="2015/05/09/使用hexo搭建静态博客/"
-               data-title="使用hexo搭建静态博客" data-url="http://blog.withword.com/2015/05/09/使用hexo搭建静态博客/">
+          <div class="ds-thread" data-thread-key="2015/07/10/Spring-Boot使用Maven的基本配置/"
+               data-title="Spring Boot采用无parent pom方式注意事项" data-url="http://blog.withword.com/2015/07/10/Spring-Boot使用Maven的基本配置/">
           </div>
         
       </div>
@@ -400,7 +348,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#官方文档"><span class="nav-number">1.</span> <span class="nav-text">官方文档</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hexo使用"><span class="nav-number">2.</span> <span class="nav-text">hexo使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#依赖"><span class="nav-number">2.1.</span> <span class="nav-text">依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装"><span class="nav-number">2.2.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建博客"><span class="nav-number">2.3.</span> <span class="nav-text">创建博客</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装依赖"><span class="nav-number">2.4.</span> <span class="nav-text">安装依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建文章"><span class="nav-number">2.5.</span> <span class="nav-text">创建文章</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编辑文章"><span class="nav-number">2.6.</span> <span class="nav-text">编辑文章</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#本地启动"><span class="nav-number">2.7.</span> <span class="nav-text">本地启动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#草稿"><span class="nav-number">2.8.</span> <span class="nav-text">草稿</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看帮助"><span class="nav-number">2.9.</span> <span class="nav-text">查看帮助</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#部署到github"><span class="nav-number">2.10.</span> <span class="nav-text">部署到github</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#域名绑定"><span class="nav-number">2.11.</span> <span class="nav-text">域名绑定</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用nexT模板"><span class="nav-number">3.</span> <span class="nav-text">使用nexT模板</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#继承starter_parent"><span class="nav-number">1.</span> <span class="nav-text">继承starter parent</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用没有父POM的Spring_Boot"><span class="nav-number">2.</span> <span class="nav-text">使用没有父POM的Spring Boot</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#改变Java版本"><span class="nav-number">3.</span> <span class="nav-text">改变Java版本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加Spring_Boot_Maven插件"><span class="nav-number">4.</span> <span class="nav-text">添加Spring Boot Maven插件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编译war时可能遇到的问题"><span class="nav-number"></span> <span class="nav-text">编译war时可能遇到的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#为当前内置的web容器依赖添加provided，防止内置web容器jar生成到WEB-INF/lib目录下"><span class="nav-number">1.</span> <span class="nav-text">为当前内置的web容器依赖添加provided，防止内置web容器jar生成到WEB-INF/lib目录下</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如果采用无父POM的Spring_Boot、且无web-xml方式，添加war默认插件配置（参考自：stackoverflow）"><span class="nav-number">2.</span> <span class="nav-text">如果采用无父POM的Spring Boot、且无web.xml方式，添加war默认插件配置（参考自：stackoverflow）</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
