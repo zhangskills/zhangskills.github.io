@@ -218,11 +218,12 @@
 </ol>
 <p>参考：</p>
 <ol>
-<li>《Spring Boot,Spring Data JPA多数据源支持》 <a href="http://wiselyman.iteye.com/blog/2184750" target="_blank" rel="external">http://wiselyman.iteye.com/blog/2184750</a></li>
-<li>《Spring Boot Multiple Datasource》 <a href="http://stackoverflow.com/questions/27614301/spring-boot-multiple-datasource" target="_blank" rel="external">http://stackoverflow.com/questions/27614301/spring-boot-multiple-datasource</a></li>
-<li>《Spring Boot Multiple Datasource - work only one》 <a href="http://stackoverflow.com/questions/29485095/spring-boot-multiple-datasource-work-only-one?lq=1" target="_blank" rel="external">http://stackoverflow.com/questions/29485095/spring-boot-multiple-datasource-work-only-one?lq=1</a></li>
+<li>《<a href="http://wiselyman.iteye.com/blog/2184750" target="_blank" rel="external">Spring Boot,Spring Data JPA多数据源支持</a>》 </li>
+<li>《<a href="http://stackoverflow.com/questions/27614301/spring-boot-multiple-datasource" target="_blank" rel="external">Spring Boot Multiple Datasource</a>》 </li>
+<li>《<a href="http://stackoverflow.com/questions/29485095/spring-boot-multiple-datasource-work-only-one?lq=1" target="_blank" rel="external">Spring Boot Multiple Datasource - work only one</a>》 </li>
 </ol>
-
+<h2 id="2015-09-02更新">2015-09-02更新</h2><p>蓦然发现<a href="http://docs.spring.io/spring-boot/docs/1.2.5.RELEASE/reference/htmlsingle/#howto-two-datasources" target="_blank" rel="external">官方文档</a>上有多数据源的配置，泪流满面</p>
+<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@Bean</span></span><br><span class="line"><span class="annotation">@Primary</span></span><br><span class="line"><span class="annotation">@ConfigurationProperties</span>(prefix=<span class="string">"datasource.primary"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="function">DataSource <span class="title">primaryDataSource</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> DataSourceBuilder.create().build();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="annotation">@Bean</span></span><br><span class="line"><span class="annotation">@ConfigurationProperties</span>(prefix=<span class="string">"datasource.secondary"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="function">DataSource <span class="title">secondaryDataSource</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> DataSourceBuilder.create().build();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
     </div>
 
@@ -369,7 +370,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#单数据源设置："><span class="nav-number">1.</span> <span class="nav-text">单数据源设置：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多数据源设置"><span class="nav-number">2.</span> <span class="nav-text">多数据源设置</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#单数据源设置："><span class="nav-number">1.</span> <span class="nav-text">单数据源设置：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多数据源设置"><span class="nav-number">2.</span> <span class="nav-text">多数据源设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2015-09-02更新"><span class="nav-number">3.</span> <span class="nav-text">2015-09-02更新</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
