@@ -24,7 +24,7 @@
 
 
 
-  <meta name="keywords" content="jack,java,程序员" />
+  <meta name="keywords" content="java,jdk," />
 
 
 
@@ -57,7 +57,7 @@
 
 
 
-  <title> 程序员Jack的自留地 </title>
+  <title> jdk7和8的一些新特性介绍 // 程序员Jack的自留地 </title>
 </head>
 
 <body>
@@ -71,9 +71,7 @@
   </div>
 <![endif]-->
 
-  <div class="container one-column 
-   page-home 
-">
+  <div class="container one-column page-post-detail">
     <div class="headband"></div>
 
     <div id="header" class="header">
@@ -149,9 +147,9 @@
       <div class="main-inner">
         <div id="content" class="content">
           
+
   <div id="posts" class="posts-expand">
     
-      
 
   <div class="post post-type-normal ">
     <div class="post-header">
@@ -162,9 +160,7 @@
           
           
             
-              <a class="post-title-link" href="/2015/09/15/jdk7和8的一些新特性介绍/">
-                jdk7和8的一些新特性介绍
-              </a>
+              jdk7和8的一些新特性介绍
             
           
         </h1>
@@ -196,8 +192,7 @@
       
 
       
-        
-          <p>本文是我学习了解了jdk7和jdk8的一些新特性的一些资料，有兴趣的大家可以浏览下下面的内容。<br>官方文档：<a href="http://www.oracle.com/technetwork/java/javase/jdk7-relnotes-418459.html" target="_blank" rel="external">http://www.oracle.com/technetwork/java/javase/jdk7-relnotes-418459.html</a></p>
+        <p>本文是我学习了解了jdk7和jdk8的一些新特性的一些资料，有兴趣的大家可以浏览下下面的内容。<br>官方文档：<a href="http://www.oracle.com/technetwork/java/javase/jdk7-relnotes-418459.html" target="_blank" rel="external">http://www.oracle.com/technetwork/java/javase/jdk7-relnotes-418459.html</a></p>
 <p>在jdk7的新特性方面主要有下面几方面的增强：</p>
 <p>一、 jdk7语法上</p>
 <ol>
@@ -380,679 +375,56 @@
 <p>更多内容可以看看附件ppt，示例代码可以参考：<a href="https://github.com/zhwj184/jdk7-8demo" target="_blank" rel="external">https://github.com/zhwj184/jdk7-8demo</a></p>
 <p>摘自：<a href="http://zhwj184.iteye.com/blog/1900560" target="_blank" rel="external">http://zhwj184.iteye.com/blog/1900560</a></p>
 
-        
       
     </div>
 
     <div class="post-footer">
       
-
+        <div class="post-tags">
+          
+            <a href="/tags/java/"> #java </a>
+          
+            <a href="/tags/jdk/"> #jdk </a>
+          
+        </div>
       
 
       
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/07/10/Spring-Boot使用Maven的基本配置/">Spring Boot使用Maven的基本配置</a>
+            
+          </div>
+        </div>
       
-        <div class="post-eof"></div>
+
+      
       
     </div>
   </div>
 
 
-    
+
+    <div class="post-spread">
       
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/07/10/Spring-Boot使用Maven的基本配置/">
-                Spring Boot使用Maven的基本配置
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于 2015-07-10
-        </span>
-
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/07/10/Spring-Boot使用Maven的基本配置/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/10/Spring-Boot使用Maven的基本配置/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
     </div>
 
-    <div class="post-body">
-
-      
-      
-
-      
+    
+      <div class="comments" id="comments">
         
-          <p>Spring Boot默认采用继承<code>spring-boot-starter-parent</code>方式，然后声明一个或多个“<a href="http://docs.spring.io/spring-boot/docs/current-SNAPSHOT/reference/htmlsingle/#using-boot-starter-poms">Starter POMs</a>”依赖，这种方式使用起来非常方便。</p>
-<h3 id="继承starter_parent">继承starter parent</h3><p>想配置你的项目继承spring-boot-starter-parent只需要简单地设置parent为：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- Inherit defaults from Spring Boot --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">parent</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>spring-boot-starter-parent<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">version</span>&gt;</span>1.2.5.RELEASE<span class="tag">&lt;/<span class="title">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">parent</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p><strong>注：</strong> 如果需要导入其他的<a href="http://docs.spring.io/spring-boot/docs/current-SNAPSHOT/reference/htmlsingle/#using-boot-starter-poms">starters</a>，你可以放心的省略版本号。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/07/10/Spring-Boot使用Maven的基本配置/">
-              阅读全文 &raquo;
-            </a>
+          <div class="ds-thread" data-thread-key="2015/09/15/jdk7和8的一些新特性介绍/"
+               data-title="jdk7和8的一些新特性介绍" data-url="http://blog.withword.com/2015/09/15/jdk7和8的一些新特性介绍/">
           </div>
         
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/07/09/ubuntu配置publickey无密码登录/">
-                ubuntu配置publickey无密码登录
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于 2015-07-09
-        </span>
-
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/07/09/ubuntu配置publickey无密码登录/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/09/ubuntu配置publickey无密码登录/"></span>
-            </a>
-          </span>
-          
-        
       </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p>平时的时候只要在用户根目录下authorized_keys文件中添加pubkey就ok了，今天一台新服务器怎么设置都是不行，登录老提示输入密码，最后终于解决，记录一下步骤：</p>
-<h2 id="基本步骤">基本步骤</h2>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/07/09/ubuntu配置publickey无密码登录/">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/07/02/Spring-boot-mongodb多数据源配置/">
-                Spring boot mongodb多数据源配置
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于 2015-07-02
-        </span>
-
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/07/02/Spring-boot-mongodb多数据源配置/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/02/Spring-boot-mongodb多数据源配置/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p>够折腾的，网上找了半天也没找到配置方式，参考jpa的配置，采用分别指定MongoTemplate的方式解决。
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/07/02/Spring-boot-mongodb多数据源配置/">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/06/19/solr更新单个字段/">
-                solr更新单个字段
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于 2015-06-19
-        </span>
-
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/06/19/solr更新单个字段/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2015/06/19/solr更新单个字段/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p>一直以来更新solr文档的时候都是把文档查出来，修改字段，整个文档更新，最近发现其实solr支持单个字段的更新操作的，不过从4.0以后开始支持，官方的叫法是Atomic Updates，支持set、add、inc。</p>
-<p>官方文档：<a href="https://wiki.apache.org/solr/Atomic_Updates">https://wiki.apache.org/solr/Atomic_Updates</a></p>
-<blockquote>
-<p>示例：</p>
-</blockquote>
-<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">curl <span class="symbol">http:</span>/<span class="regexp">/localhost:8983/solr</span><span class="regexp">/update -H 'Content-type:application/json</span><span class="string">' -d '</span></span><br><span class="line">[</span><br><span class="line"> &#123;</span><br><span class="line">  <span class="string">"id"</span>        <span class="symbol">:</span> <span class="string">"TestDoc1"</span>,</span><br><span class="line">  <span class="string">"title"</span>     <span class="symbol">:</span> &#123;<span class="string">"set"</span><span class="symbol">:<span class="string">"test1"</span></span>&#125;,</span><br><span class="line">  <span class="string">"revision"</span>  <span class="symbol">:</span> &#123;<span class="string">"inc"</span><span class="symbol">:</span><span class="number">3</span>&#125;,</span><br><span class="line">  <span class="string">"publisher"</span> <span class="symbol">:</span> &#123;<span class="string">"add"</span><span class="symbol">:<span class="string">"TestPublisher"</span></span>&#125;</span><br><span class="line"> &#125;,</span><br><span class="line"> &#123;</span><br><span class="line">  <span class="string">"id"</span>        <span class="symbol">:</span> <span class="string">"TestDoc2"</span>,</span><br><span class="line">  <span class="string">"publisher"</span> <span class="symbol">:</span> &#123;<span class="string">"add"</span><span class="symbol">:<span class="string">"TestPublisher"</span></span>&#125;</span><br><span class="line"> &#125;</span><br><span class="line">]<span class="string">'</span></span><br></pre></td></tr></table></figure>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/06/19/solr更新单个字段/">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/06/18/Spring-boot-jpa单数据源、多数据源配置/">
-                Spring boot jpa单数据源、多数据源配置
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于 2015-06-18
-        </span>
-
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/06/18/Spring-boot-jpa单数据源、多数据源配置/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2015/06/18/Spring-boot-jpa单数据源、多数据源配置/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p>spring boot很多配置都采用自动化，开发起来非常快速，试了一阵子jpa，各种爽歪歪。<br>不过，凡事有利必有弊，自动化封装好，有些个性定制的东西反而不好设置，今天为了配置jpa多数据源，各种郁闷（专业知识不过硬，注定被坑，没办法的事情），最后总算摸出点门路，记录一下（采用mysql）<br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/06/18/Spring-boot-jpa单数据源、多数据源配置/">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/10/搭建clojure开发环境/">
-                搭建clojure开发环境
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于 2015-05-10
-        </span>
-
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/10/搭建clojure开发环境/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/10/搭建clojure开发环境/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p><strong>操作系统为</strong>：Mac OS X 10.10.3</p>
-<p><strong>IDE</strong>：IntelliJ IDEA 14.1.1</p>
-<h2 id="leiningen">leiningen</h2><h3 id="Leiningen是你的主要工具，_它用于：">Leiningen是你的主要工具， 它用于：</h3><ol>
-<li>启动一个 REPL</li>
-<li>下载+安装类库</li>
-<li>运行你的程序</li>
-<li>启动一个服务器， 运行你所写的webapps</li>
-</ol>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/05/10/搭建clojure开发环境/">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/09/使用hexo搭建静态博客/">
-                使用hexo搭建静态博客
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于 2015-05-09
-        </span>
-
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/09/使用hexo搭建静态博客/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/09/使用hexo搭建静态博客/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p>Hexo 是一个简单地、轻量地、基于Node的一个静态博客框架。通过Hexo我们可以快速创建自己的博客，然后部署在github pages搭建的免费无限流量的个人博客。</p>
-<h2 id="官方文档">官方文档</h2><blockquote>
-<p>Hexo：<a href="http://hexo.io/docs/">http://hexo.io/docs/</a></p>
-<p>GitHub Pages<a href="https://help.github.com/articles/what-are-github-pages/">https://help.github.com/articles/what-are-github-pages/</a></p>
-</blockquote>
-<h2 id="hexo使用">hexo使用</h2><h3 id="依赖">依赖</h3><ol>
-<li>Node.js 官网：<a href="http://nodejs.org/">http://nodejs.org/</a></li>
-<li>Git 官网：<a href="http://git-scm.com/">http://git-scm.com/</a></li>
-</ol>
-<h3 id="安装">安装</h3>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/05/09/使用hexo搭建静态博客/">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/09/CSS浮动DIV撑开父层高度的问题/">
-                CSS浮动DIV撑开父层高度的问题
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于 2015-05-09
-        </span>
-
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/09/CSS浮动DIV撑开父层高度的问题/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/09/CSS浮动DIV撑开父层高度的问题/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p>以前采用浮动之后，加一个<code>clear:both</code>标签来撑开父层，总觉得不爽，写起来也麻烦，其实可以采用另外的方式。</p>
-<h2 id="旧方式：">旧方式：</h2><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="keyword">div</span>&gt;</span><br><span class="line">&lt;<span class="keyword">div</span> style=<span class="string">"float:left;"</span>&gt;&lt;/<span class="keyword">div</span>&gt;</span><br><span class="line">&lt;<span class="keyword">div</span> style=<span class="string">"float:left;"</span>&gt;&lt;/<span class="keyword">div</span>&gt;</span><br><span class="line">&lt;<span class="keyword">div</span> style=<span class="string">"clear:both;"</span>&gt;&lt;/<span class="keyword">div</span>&gt;</span><br><span class="line">&lt;/<span class="keyword">div</span>&gt;</span><br></pre></td></tr></table></figure>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/05/09/CSS浮动DIV撑开父层高度的问题/">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/08/restart-a-blog/">
-                重新开始写博客
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于 2015-05-08
-        </span>
-
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/08/restart-a-blog/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/08/restart-a-blog/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p>总是思想上比别人慢一拍，等到静态博客都已经流行过来了，忽然来了兴致，想开一个静态博客，以后尽量定期写点</p>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
     
   </div>
 
-  
 
         </div>
 
@@ -1073,6 +445,15 @@
   <div id="sidebar" class="sidebar">
     <div class="sidebar-inner">
 
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
       
 
       <div class="site-overview">
@@ -1130,6 +511,17 @@
         
       </div>
 
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
       
 
     </div>
@@ -1192,6 +584,145 @@
   <script type="text/javascript" src="/js/search-toggle.js"></script>
 
   
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.3" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
 
   <script type="text/javascript">
     $(document).ready(function () {
